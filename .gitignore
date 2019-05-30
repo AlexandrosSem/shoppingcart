@@ -1,3 +1,6 @@
+# Dist files
+dist/
+
 # Logs
 logs
 *.log
@@ -59,9 +62,3 @@ typings/
 
 # next.js build output
 .next
-
-# vuepress build output
-.vuepress/dist
-
-# Serverless directories
-.serverless
