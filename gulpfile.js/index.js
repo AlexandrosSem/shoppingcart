@@ -46,7 +46,7 @@ gulp.task('clean:html', function(pFnDone) {
 gulp.task('image', gulp.series('clean:image', function imageBuild(pFnDone) {
 	!(gulp.src('app/img/**/*.+(png|jpg|jpeg|gif|svg)')
 		.pipe(imagemin({
-			optimizationLeve : 5,
+			optimizationLevel : 5,
 			interlaced: true
 		}))
 		.pipe(gulp.dest('dist/img'))
