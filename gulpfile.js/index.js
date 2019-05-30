@@ -1,17 +1,17 @@
-var gulp        = require('gulp');
-var concat      = require('gulp-concat');
-var coffee      = require('gulp-coffee');
-var uglify      = require('gulp-uglify');
-var sass        = require('gulp-sass');
-var rename      = require('gulp-rename');
-var imagemin    = require('gulp-imagemin');
-var htmlclean   = require('gulp-htmlclean');
-var deporder    = require('gulp-deporder');
-var stripdebug  = require('gulp-strip-debug');
-var del         = require('del');
-var plumber     = require('gulp-plumber');
-var browserSync = require('browser-sync').create();
-var cleanCSS    = require('gulp-clean-css');
+const gulp        = require('gulp');
+const concat      = require('gulp-concat');
+const coffee      = require('gulp-coffee');
+const uglify      = require('gulp-uglify');
+const sass        = require('gulp-sass');
+const rename      = require('gulp-rename');
+const imagemin    = require('gulp-imagemin');
+const htmlclean   = require('gulp-htmlclean');
+const deporder    = require('gulp-deporder');
+const stripdebug  = require('gulp-strip-debug');
+const del         = require('del');
+const plumber     = require('gulp-plumber');
+const browserSync = require('browser-sync').create();
+const cleanCSS    = require('gulp-clean-css');
 
 gulp.task('clean:dist', function(pFnDone) {
 	del.sync(['dist/**', '!dist', '!dist/.gitkeep']);
