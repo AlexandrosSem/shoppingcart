@@ -45,10 +45,7 @@ gulp.task('clean:html', function(pFnDone) {
 
 gulp.task('image', gulp.series('clean:image', function imageBuild(pFnDone) {
 	!(gulp.src('app/img/**/*.+(png|jpg|jpeg|gif|svg)')
-		.pipe(imagemin({
-			optimizationLevel : 5,
-			interlaced: true
-		}))
+		.pipe(imagemin())
 		.pipe(gulp.dest('dist/img'))
 	);
 	pFnDone();
