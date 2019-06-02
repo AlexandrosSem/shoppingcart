@@ -12,6 +12,7 @@ const del         = require('del');
 const plumber     = require('gulp-plumber');
 const browserSync = require('browser-sync').create();
 const cleanCSS    = require('gulp-clean-css');
+const babel       = require('gulp-babel');
 
 gulp.task('clean:dist', function(pFnDone) {
 	del.sync(['dist/**', '!dist', '!dist/.gitkeep']);
@@ -83,6 +84,9 @@ gulp.task('coffee', function(pFnDone) {
 
 gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
 	!(gulp.src('app/js/*.js')
+		.pipe(babel({
+			presets: ['es2015']
+	  	}))	
 		.pipe(plumber())
 		.pipe(deporder()) // Ensure dependency order
 		.pipe(concat('scripts.js'))
@@ -96,14 +100,14 @@ gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
 }));
 
 gulp.task('lib', gulp.series('clean:lib', function libBuild(pFnDone) {
-	!(gulp.src(['app/lib/**/*', '!app/lib/.gitkeep'])
+	!(gulp.src(['app/lib/**/*', '!app/lib', '!app/lib/.gitkeep'])
 		.pipe(gulp.dest('dist/lib'))
 	);
 	pFnDone();
 }));
 
 gulp.task('html', gulp.series('clean:html', function htmlBuild(pFnDone) {
-	!(gulp.src(['app/**/*.+(html|htm)', '!app/lib/**'])
+	!(gulp.src(['app/**/*.+(html|htm)', '!app/lib', '!app/lib/**'])
 		//.pipe(htmlclean()) // Clean HTML (comments, unnecessary whitespaces / attributes, etc.)
 		.pipe(gulp.dest('dist'))
 	);
