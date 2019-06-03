@@ -1,5 +1,5 @@
-import Vue from 'vue';
-//import * as data from './data';
+// import Vue from 'vue';
+// import * as data from './data';
 
 const vm = new Vue({
     el: '#app',

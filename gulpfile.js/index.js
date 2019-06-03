@@ -82,11 +82,18 @@ gulp.task('coffee', function(pFnDone) {
 	pFnDone();
 });
 
+gulp.task('babel', function(pFnDone) {
+	!(gulp.src('app/babel/**/*.js')
+		.pipe(plumber())
+		.pipe(babel({ presets: ['@babel/preset-env'] }))
+		.pipe(concat('babelScript.js'))
+		.pipe(gulp.dest('app/js'))
+	);
+	pFnDone();
+});
+
 gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
 	!(gulp.src('app/js/*.js')
-		.pipe(babel({
-			presets: ['es2015']
-	  	}))	
 		.pipe(plumber())
 		.pipe(deporder()) // Ensure dependency order
 		.pipe(concat('scripts.js'))
@@ -100,14 +107,14 @@ gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
 }));
 
 gulp.task('lib', gulp.series('clean:lib', function libBuild(pFnDone) {
-	!(gulp.src(['app/lib/**/*', '!app/lib', '!app/lib/.gitkeep'])
+	!(gulp.src(['app/lib/**/*', '!app/lib/.gitkeep'])
 		.pipe(gulp.dest('dist/lib'))
 	);
 	pFnDone();
 }));
 
 gulp.task('html', gulp.series('clean:html', function htmlBuild(pFnDone) {
-	!(gulp.src(['app/**/*.+(html|htm)', '!app/lib', '!app/lib/**'])
+	!(gulp.src(['app/**/*.+(html|htm)', '!app/lib/**'])
 		//.pipe(htmlclean()) // Clean HTML (comments, unnecessary whitespaces / attributes, etc.)
 		.pipe(gulp.dest('dist'))
 	);
@@ -119,6 +126,7 @@ gulp.task('watch', function(pFnDone) {
 	gulp.watch('app/scss/**/*.scss', gulp.series('sass'));
 	gulp.watch('app/css/**/*.css', gulp.series('css'));
 	gulp.watch('app/coffee/**/*.coffee', gulp.series('coffee'));
+	gulp.watch('app/babel/**/*.js', gulp.series('babel'));
 	gulp.watch('app/js/**/*.js', gulp.series('js'));
 	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], gulp.series('lib'));
 	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], gulp.series('html'));
@@ -139,7 +147,7 @@ gulp.task('connect', function(pFnDone) {
 	pFnDone();
 });
 
-gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('coffee', 'js'), 'lib', 'html')));
+gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('coffee', 'babel', 'js'), 'lib', 'html')));
 
 gulp.task('dev', gulp.parallel(gulp.series('build', 'connect', 'watch')));
 
