@@ -34,6 +34,11 @@ gulp.task('clean:js', function(pFnDone) {
 	pFnDone();
 });
 
+gulp.task('clean:babel', function(pFnDone) {
+	del.sync(['app/js/babelScript.js']);
+	pFnDone();
+});
+
 gulp.task('clean:lib', function(pFnDone) {
 	del.sync(['dist/lib/**']);
 	pFnDone();
@@ -82,7 +87,7 @@ gulp.task('coffee', function(pFnDone) {
 	pFnDone();
 });
 
-gulp.task('babel', function(pFnDone) {
+gulp.task('babel', gulp.series('clean:babel', function babelScriptBuild(pFnDone) {
 	!(gulp.src('app/babel/**/*.js')
 		.pipe(plumber())
 		.pipe(babel({ presets: ['@babel/preset-env'] }))
@@ -90,9 +95,9 @@ gulp.task('babel', function(pFnDone) {
 		.pipe(gulp.dest('app/js'))
 	);
 	pFnDone();
-});
+}));
 
-gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
+gulp.task('js', function jsBuild(pFnDone) {
 	!(gulp.src('app/js/*.js')
 		.pipe(plumber())
 		.pipe(deporder()) // Ensure dependency order
@@ -104,7 +109,7 @@ gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
 		.pipe(gulp.dest('dist/js'))
 	);
 	pFnDone();
-}));
+});
 
 gulp.task('lib', gulp.series('clean:lib', function libBuild(pFnDone) {
 	!(gulp.src(['app/lib/**/*', '!app/lib/.gitkeep'])

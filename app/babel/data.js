@@ -14,7 +14,7 @@ export default {
         price: 0,
         description: ''
     }, {
-        id: 3,
+        id: 3, 
         title: 'titleC',
         subTitle: 'subTitleC',       
         imageURL: '',

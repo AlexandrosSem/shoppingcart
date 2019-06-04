@@ -1,7 +1,6 @@
 "use strict";
 
-// import Vue from 'vue';
-// import * as data from './data';
+//import * as data from './data';
 var vm = new Vue({
   el: '#app',
   data: {
@@ -9,7 +8,7 @@ var vm = new Vue({
   },
   components: {
     app: {
-      template: "<h1>\n                Hello World!\n            </h1>"
+      template: "<h1>\n                Hello World!     \n            </h1>"
     }
   }
 });
