@@ -1,16 +1,19 @@
-//import * as data from './data';
-
-const vm = new Vue({
-    el: '#app',
-    data: {
-        title: 'hi'   
-    },
-    components: {
-        app: {
-            template:
-            `<h1>
-                Hello World!     
-            </h1>`
-        },
-    }
-});
+/* requires:
+babel/data.js
+*/
+(function(global) {
+	global.vm = new Vue({
+		el: '#app',
+		data: {
+			title: data.title
+		},
+		components: {
+			app: {
+				template:
+				`<h1>
+					Hello World!
+				</h1>`
+			},
+		}
+	});
+})(this);

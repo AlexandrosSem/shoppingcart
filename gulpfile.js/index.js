@@ -1,6 +1,5 @@
 const gulp        = require('gulp');
 const concat      = require('gulp-concat');
-const coffee      = require('gulp-coffee');
 const uglify      = require('gulp-uglify');
 const sass        = require('gulp-sass');
 const rename      = require('gulp-rename');
@@ -15,90 +14,65 @@ const cleanCSS    = require('gulp-clean-css');
 const babel       = require('gulp-babel');
 
 gulp.task('clean:dist', function(pFnDone) {
-	del.sync(['dist/**', '!dist', '!dist/.gitkeep']);
-	pFnDone();
+	return del(['dist/**', '!dist', '!dist/.gitkeep']);
 });
 
 gulp.task('clean:css', function(pFnDone) {
-	del.sync(['dist/css/**']);
-	pFnDone();
+	return del(['dist/css/**']);
 });
 
 gulp.task('clean:image', function(pFnDone) {
-	del.sync(['dist/img/**']);
-	pFnDone();
-});
-
-gulp.task('clean:js', function(pFnDone) {
-	del.sync(['dist/js/**']);
-	pFnDone();
-});
-
-gulp.task('clean:babel', function(pFnDone) {
-	del.sync(['app/js/babelScript.js']);
-	pFnDone();
+	return del(['dist/img/**']);
 });
 
 gulp.task('clean:lib', function(pFnDone) {
-	del.sync(['dist/lib/**']);
-	pFnDone();
+	return del(['dist/lib/**']);
 });
 
 gulp.task('clean:html', function(pFnDone) {
-	del.sync(['dist/**/*.+(html|htm)', '!dist/lib', '!dist/lib/**/*.+(html|htm)']);
-	pFnDone();
+	return del(['dist/**/*.+(html|htm)', '!dist/lib', '!dist/lib/**/*.+(html|htm)']);
 });
 
 gulp.task('image', gulp.series('clean:image', function imageBuild(pFnDone) {
-	!(gulp.src('app/img/**/*.+(png|jpg|jpeg|gif|svg)')
+	return gulp.src('app/img/**/*.+(png|jpg|jpeg|gif|svg)')
 		.pipe(imagemin())
-		.pipe(gulp.dest('dist/img'))
-	);
-	pFnDone();
+		.pipe(gulp.dest('dist/img'));
 }));
 
 gulp.task('sass', function(pFnDone) {
-	!(gulp.src('app/scss/**/*.scss')
+	return gulp.src('app/scss/**/*.scss')
 		.pipe(sass())
 		.pipe(concat('scssStyles.css'))
-		.pipe(gulp.dest('app/css'))
-	);
-	pFnDone();
+		.pipe(gulp.dest('app/css'));
 });
 
 gulp.task('css', gulp.series('clean:css', function cssBuild(pFnDone) {
-	!(gulp.src('app/css/**/*.css')
+	return gulp.src('app/css/**/*.css')
 		.pipe(plumber())
 		.pipe(concat('styles.css'))
 		.pipe(gulp.dest('dist/css', { overwrite: true }))
 		.pipe(rename('styles.min.css'))
 		.pipe(cleanCSS())
-		.pipe(gulp.dest('dist/css', { overwrite: true }))
-	);
-	pFnDone();
+		.pipe(gulp.dest('dist/css', { overwrite: true }));
 }));
 
-gulp.task('coffee', function(pFnDone) {
-	!(gulp.src('app/coffee/**/*.coffee')
-		.pipe(coffee())
-		.pipe(concat('coffeeScripts.js'))
-		.pipe(gulp.dest('app/js'))
-	);
-	pFnDone();
+gulp.task('clean:babel', function clearBabel(pFnDone) {
+	return del(['app/js/babel/**']);
 });
 
-gulp.task('babel', gulp.series('clean:babel', function babelScriptBuild(pFnDone) {
-	!(gulp.src('app/babel/**/*.js')
+gulp.task('babel', gulp.series('clean:babel', function babelBuild(pFnDone) {
+	return gulp.src('app/babel/**/*.js')
 		.pipe(plumber())
-		.pipe(babel({ presets: ['@babel/preset-env'] }))
-		.pipe(concat('babelScript.js'))
-		.pipe(gulp.dest('app/js'))
-	);
-	pFnDone();
+		.pipe(babel({ presets: ['@babel/preset-env'], sourceType: 'script' }))
+		.pipe(gulp.dest('app/js/babel'));
 }));
 
-gulp.task('js', function jsBuild(pFnDone) {
-	!(gulp.src('app/js/*.js')
+gulp.task('clean:js', function(pFnDone) {
+	return del(['dist/js/**']);
+});
+
+gulp.task('js', gulp.series('clean:js', function jsBuild(pFnDone) {
+	return gulp.src('app/js/**/*.js')
 		.pipe(plumber())
 		.pipe(deporder()) // Ensure dependency order
 		.pipe(concat('scripts.js'))
@@ -106,36 +80,29 @@ gulp.task('js', function jsBuild(pFnDone) {
 		.pipe(rename('scripts.min.js'))
 		//.pipe(stripdebug()) // Remove debug lines
 		.pipe(uglify())
-		.pipe(gulp.dest('dist/js'))
-	);
-	pFnDone();
-});
+		.pipe(gulp.dest('dist/js'));
+}));
 
 gulp.task('lib', gulp.series('clean:lib', function libBuild(pFnDone) {
-	!(gulp.src(['app/lib/**/*', '!app/lib/.gitkeep'])
-		.pipe(gulp.dest('dist/lib'))
-	);
-	pFnDone();
+	return gulp.src(['app/lib/**/*', '!app/lib/.gitkeep'])
+		.pipe(gulp.dest('dist/lib'));
 }));
 
 gulp.task('html', gulp.series('clean:html', function htmlBuild(pFnDone) {
-	!(gulp.src(['app/**/*.+(html|htm)', '!app/lib/**'])
+	return gulp.src(['app/**/*.+(html|htm)', '!app/lib/**'])
 		//.pipe(htmlclean()) // Clean HTML (comments, unnecessary whitespaces / attributes, etc.)
-		.pipe(gulp.dest('dist'))
-	);
-	pFnDone();
+		.pipe(gulp.dest('dist'));
 }));
 
 gulp.task('watch', function(pFnDone) {
-	gulp.watch('app/img/**/*.+(png|jpg|jpeg|gif|svg)', gulp.series('image'))
-	gulp.watch('app/scss/**/*.scss', gulp.series('sass'));
-	gulp.watch('app/css/**/*.css', gulp.series('css'));
-	gulp.watch('app/coffee/**/*.coffee', gulp.series('coffee'));
-	gulp.watch('app/babel/**/*.js', gulp.series('babel'));
-	gulp.watch('app/js/**/*.js', gulp.series('js'));
-	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], gulp.series('lib'));
-	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], gulp.series('html'));
-	gulp.watch('dist/**/*', function ReloadBrowser(pFnDone) {
+	gulp.watch('app/img/**/*.+(png|jpg|jpeg|gif|svg)', { readDelay: 250 }, gulp.series('image'))
+	gulp.watch('app/scss/**/*.scss', { readDelay: 250 }, gulp.series('sass'));
+	gulp.watch('app/css/**/*.css', { readDelay: 250 }, gulp.series('css'));
+	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
+	gulp.watch('app/js/**/*.js', { readDelay: 250 }, gulp.series('js'));
+	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], { readDelay: 250 }, gulp.series('lib'));
+	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], { readDelay: 250 }, gulp.series('html'));
+	gulp.watch('dist/**/*', { readDelay: 250 }, function ReloadBrowser(pFnDone) {
 		browserSync.reload();
 		pFnDone();
 	});
@@ -152,7 +119,7 @@ gulp.task('connect', function(pFnDone) {
 	pFnDone();
 });
 
-gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('coffee', 'babel', 'js'), 'lib', 'html')));
+gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('babel', 'js'), 'lib', 'html')));
 
 gulp.task('dev', gulp.parallel(gulp.series('build', 'connect', 'watch')));
 
