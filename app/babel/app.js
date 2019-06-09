@@ -7,7 +7,7 @@ babel\vuejs\Header.js
 	global.vm = new Vue({
 		el: '#app',
 		data: {
-			title: data.title
+			
 		}
 	});
 })(this);

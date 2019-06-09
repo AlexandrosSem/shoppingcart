@@ -6,8 +6,6 @@ babel\vuejs\Header.js
 (function (global) {
   global.vm = new Vue({
     el: '#app',
-    data: {
-      title: data.title
-    }
+    data: {}
   });
 })(this);
