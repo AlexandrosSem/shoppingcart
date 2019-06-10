@@ -1,17 +1,19 @@
-const gulp        = require('gulp');
-const concat      = require('gulp-concat');
-const uglify      = require('gulp-uglify');
-const sass        = require('gulp-sass');
-const rename      = require('gulp-rename');
-const imagemin    = require('gulp-imagemin');
-const htmlclean   = require('gulp-htmlclean');
-const deporder    = require('gulp-deporder');
-const stripdebug  = require('gulp-strip-debug');
-const del         = require('del');
-const plumber     = require('gulp-plumber');
-const browserSync = require('browser-sync').create();
-const cleanCSS    = require('gulp-clean-css');
-const babel       = require('gulp-babel');
+const gulp          = require('gulp');
+const concat        = require('gulp-concat');
+const uglify        = require('gulp-uglify');
+const sass          = require('gulp-sass');
+const rename        = require('gulp-rename');
+const imagemin      = require('gulp-imagemin');
+const htmlclean     = require('gulp-htmlclean');
+const deporder      = require('gulp-deporder');
+const stripdebug    = require('gulp-strip-debug');
+const del           = require('del');
+const plumber       = require('gulp-plumber');
+const browserSync   = require('browser-sync').create();
+const cleanCSS      = require('gulp-clean-css');
+const babel         = require('gulp-babel');
+const webpack       = require('webpack');
+const webpackConfig = require('../webpackjs/webpack.config.js');
 
 gulp.task('clean:dist', function(pFnDone) {
 	return del(['dist/**', '!dist', '!dist/.gitkeep']);
@@ -66,6 +68,20 @@ gulp.task('babel', gulp.series('clean:babel', function babelBuild(pFnDone) {
 		.pipe(babel({ presets: ['@babel/preset-env'], sourceType: 'script' }))
 		.pipe(gulp.dest('app/js/babel'));
 }));
+
+gulp.task('webpack', function() {
+	return new Promise(function(resolve, reject) {
+		webpack(webpackConfig, function(err, stats) {
+			if (err) {
+                return reject(err)
+            }
+			if (stats.hasErrors()) {
+                return reject(new Error(stats.compilation.errors.join('\n')));
+            }
+            resolve();
+		});
+	});
+});
 
 gulp.task('clean:js', function(pFnDone) {
 	return del(['dist/js/**']);
