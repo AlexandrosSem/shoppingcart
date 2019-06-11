@@ -30,6 +30,7 @@
     "gulp-strip-debug": "^3.0.0",
     "gulp-uglify": "^3.0.1",
     "gulp-util": "^3.0.8",
-    "webpack": "^4.33.0"
+    "webpack": "^4.33.0",
+    "webpack-stream": "^5.2.1"
   }
 }

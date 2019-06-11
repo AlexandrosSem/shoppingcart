@@ -1,5 +1,5 @@
-(function(global) {
-	global.data = {
+const productData = (function(global) {
+	return (global.data = {
 		title: 'test 2',
 		products: [{
 			id: 1,
@@ -23,5 +23,10 @@
 			price: 0,
 			description: ''
 		}]
-	};
-})(this);
+	});
+}(window));
+
+export {
+	productData
+};
+

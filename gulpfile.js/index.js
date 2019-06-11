@@ -12,8 +12,8 @@ const plumber       = require('gulp-plumber');
 const browserSync   = require('browser-sync').create();
 const cleanCSS      = require('gulp-clean-css');
 const babel         = require('gulp-babel');
-const webpack       = require('webpack');
-const webpackConfig = require('../webpackjs/webpack.config.js');
+const compiler      = require('webpack');
+const webpack       = require('webpack-stream');
 
 gulp.task('clean:dist', function(pFnDone) {
 	return del(['dist/**', '!dist', '!dist/.gitkeep']);
@@ -69,19 +69,15 @@ gulp.task('babel', gulp.series('clean:babel', function babelBuild(pFnDone) {
 		.pipe(gulp.dest('app/js/babel'));
 }));
 
-gulp.task('webpack', function() {
-	return new Promise(function(resolve, reject) {
-		webpack(webpackConfig, function(err, stats) {
-			if (err) {
-                return reject(err)
-            }
-			if (stats.hasErrors()) {
-                return reject(new Error(stats.compilation.errors.join('\n')));
-            }
-            resolve();
-		});
-	});
-});
+gulp.task('webpack', gulp.series('clean:babel', function webpackBuild(pFnDone) {
+	return gulp.src('app/babel/**/*.js')
+		.pipe(webpack({
+			mode: 'development'
+		}, compiler, function (err, stats) {
+
+		}))
+		.pipe(gulp.dest('app/js/babel'));
+}));
 
 gulp.task('clean:js', function(pFnDone) {
 	return del(['dist/js/**']);
@@ -114,7 +110,8 @@ gulp.task('watch', function(pFnDone) {
 	gulp.watch('app/img/**/*.+(png|jpg|jpeg|gif|svg)', { readDelay: 250 }, gulp.series('image'))
 	gulp.watch('app/scss/**/*.scss', { readDelay: 250 }, gulp.series('sass'));
 	gulp.watch('app/css/**/*.css', { readDelay: 250 }, gulp.series('css'));
-	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
+	//gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
+	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('webpack'));
 	gulp.watch('app/js/**/*.js', { readDelay: 250 }, gulp.series('js'));
 	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], { readDelay: 250 }, gulp.series('lib'));
 	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], { readDelay: 250 }, gulp.series('html'));
@@ -135,7 +132,7 @@ gulp.task('connect', function(pFnDone) {
 	pFnDone();
 });
 
-gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('babel', 'js'), 'lib', 'html')));
+gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('webpack', 'js'), 'lib', 'html')));
 
 gulp.task('dev', gulp.parallel(gulp.series('build', 'connect', 'watch')));
 
