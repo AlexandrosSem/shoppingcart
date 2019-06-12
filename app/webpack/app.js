@@ -1,6 +1,6 @@
 import {productData} from './data';
-import MainComp from './vuejs/Main';
-import HeaderComp from './vuejs/Header';
+import Container from './Container';
+import Header from './Header';
 
 (function(global) {
 	global.vm = new Vue({
@@ -9,8 +9,8 @@ import HeaderComp from './vuejs/Header';
 			
 		},
 		components: {
-			MainComp,
-			HeaderComp
+			'Container': Container,
+			'Header': Header
 		}
 	});
 })(window);

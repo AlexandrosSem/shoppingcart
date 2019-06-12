@@ -58,6 +58,19 @@ gulp.task('css', gulp.series('clean:css', function cssBuild(pFnDone) {
 		.pipe(gulp.dest('dist/css', { overwrite: true }));
 }));
 
+gulp.task('clean:webpack', function clearBabel(pFnDone) {
+	return del(['app/babel/webpack/**']);
+});
+
+gulp.task('webpack', gulp.series('clean:webpack', function webpackBuild(pFnDone) {
+	return gulp.src('app/webpack/**/*.js')
+		.pipe(webpack({
+			mode: 'development'
+		}, compiler, function (err, stats) { }))
+		.pipe(rename('webpack.js'))
+		.pipe(gulp.dest('app/babel/webpack'));
+}));
+
 gulp.task('clean:babel', function clearBabel(pFnDone) {
 	return del(['app/js/babel/**']);
 });
@@ -66,16 +79,6 @@ gulp.task('babel', gulp.series('clean:babel', function babelBuild(pFnDone) {
 	return gulp.src('app/babel/**/*.js')
 		.pipe(plumber())
 		.pipe(babel({ presets: ['@babel/preset-env'], sourceType: 'script' }))
-		.pipe(gulp.dest('app/js/babel'));
-}));
-
-gulp.task('webpack', gulp.series('clean:babel', function webpackBuild(pFnDone) {
-	return gulp.src('app/babel/**/*.js')
-		.pipe(webpack({
-			mode: 'development'
-		}, compiler, function (err, stats) {
-
-		}))
 		.pipe(gulp.dest('app/js/babel'));
 }));
 
@@ -110,8 +113,8 @@ gulp.task('watch', function(pFnDone) {
 	gulp.watch('app/img/**/*.+(png|jpg|jpeg|gif|svg)', { readDelay: 250 }, gulp.series('image'))
 	gulp.watch('app/scss/**/*.scss', { readDelay: 250 }, gulp.series('sass'));
 	gulp.watch('app/css/**/*.css', { readDelay: 250 }, gulp.series('css'));
-	//gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
-	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('webpack'));
+	gulp.watch('app/webpack/**/*.js', { readDelay: 250 }, gulp.series('webpack'));
+	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
 	gulp.watch('app/js/**/*.js', { readDelay: 250 }, gulp.series('js'));
 	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], { readDelay: 250 }, gulp.series('lib'));
 	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], { readDelay: 250 }, gulp.series('html'));
@@ -132,7 +135,7 @@ gulp.task('connect', function(pFnDone) {
 	pFnDone();
 });
 
-gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('webpack', 'js'), 'lib', 'html')));
+gulp.task('build', gulp.series('clean:dist', gulp.parallel('image', gulp.series('sass','css'), gulp.series('webpack', 'babel', 'js'), 'lib', 'html')));
 
 gulp.task('dev', gulp.parallel(gulp.series('build', 'connect', 'watch')));
 
