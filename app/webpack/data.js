@@ -24,7 +24,7 @@ const productData = (function(global) {
 			description: ''
 		}]
 	});
-}(window));
+}(window || this));
 
 export {
 	productData

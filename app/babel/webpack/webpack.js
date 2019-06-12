@@ -86,18 +86,6 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./app/webpack/Container.js":
-/*!**********************************!*\
-  !*** ./app/webpack/Container.js ***!
-  \**********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    template: `<div id=\"main\" class=\"container\">\n        <slot name=\"header\"></slot>\n    </div>`,\n    data() {\n        return {};\n    }\n});\n\n//# sourceURL=webpack:///./app/webpack/Container.js?");
-
-/***/ }),
-
 /***/ "./app/webpack/Header.js":
 /*!*******************************!*\
   !*** ./app/webpack/Header.js ***!
@@ -106,7 +94,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    template: `<nav class=\"navbar is-dark\">\n        <a class=\"navbar-item is-active\" href=\"#\">Products</a>\n        <a class=\"navbar-item\" href=\"#\">Cart</a>\n    </nav>`,\n    data() {\n        return {};\n    }\n});\n\n//# sourceURL=webpack:///./app/webpack/Header.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\r\n    template: `<nav class=\"navbar is-dark\">\r\n        <a class=\"navbar-item is-active\" href=\"#\">Products</a>\r\n        <a class=\"navbar-item\" href=\"#\">Cart</a>\r\n    </nav>`,\r\n    data() {\r\n        return {};\r\n    }\r\n});\n\n//# sourceURL=webpack:///./app/webpack/Header.js?");
 
 /***/ }),
 
@@ -118,7 +106,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ \"./app/webpack/data.js\");\n/* harmony import */ var _Container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Container */ \"./app/webpack/Container.js\");\n/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header */ \"./app/webpack/Header.js\");\n\n\n\n\n(function(global) {\n\tglobal.vm = new Vue({\n\t\tel: '#app',\n\t\tdata: {\n\t\t\t\n\t\t},\n\t\tcomponents: {\n\t\t\t'Container': _Container__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n\t\t\t'Header': _Header__WEBPACK_IMPORTED_MODULE_2__[\"default\"]\n\t\t}\n\t});\n})(window);\n\n\n//# sourceURL=webpack:///./app/webpack/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ \"./app/webpack/data.js\");\n/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ \"./app/webpack/Header.js\");\n\r\n\r\n\r\n(function(global) {\r\n\tglobal.vm = new Vue({\r\n\t\tel: '#app',\r\n\t\tdata: {\r\n\t\t\t\r\n\t\t},\r\n\t\tcomponents: {\r\n\t\t\t'Header': _Header__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\r\n\t\t}\r\n\t});\r\n})(window || undefined);\r\n\n\n//# sourceURL=webpack:///./app/webpack/app.js?");
 
 /***/ }),
 
@@ -130,18 +118,18 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _dat
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"productData\", function() { return productData; });\nconst productData = (function(global) {\n\treturn (global.data = {\n\t\ttitle: 'test 2',\n\t\tproducts: [{\n\t\t\tid: 1,\n\t\t\ttitle: 'titleA',\n\t\t\tsubTitle: 'subTitleA',       \n\t\t\timageURL: '',\n\t\t\tprice: 0,\n\t\t\tdescription: ''\n\t\t}, {\n\t\t\tid: 2,\n\t\t\ttitle: 'titleB',\n\t\t\tsubTitle: 'subTitleB',       \n\t\t\timageURL: '',\n\t\t\tprice: 0,\n\t\t\tdescription: ''\n\t\t}, {\n\t\t\tid: 3, \n\t\t\ttitle: 'titleC',\n\t\t\tsubTitle: 'subTitleC',       \n\t\t\timageURL: '',\n\t\t\tprice: 0,\n\t\t\tdescription: ''\n\t\t}]\n\t});\n}(window));\n\n\n\n\n\n//# sourceURL=webpack:///./app/webpack/data.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"productData\", function() { return productData; });\nconst productData = (function(global) {\r\n\treturn (global.data = {\r\n\t\ttitle: 'test 2',\r\n\t\tproducts: [{\r\n\t\t\tid: 1,\r\n\t\t\ttitle: 'titleA',\r\n\t\t\tsubTitle: 'subTitleA',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}, {\r\n\t\t\tid: 2,\r\n\t\t\ttitle: 'titleB',\r\n\t\t\tsubTitle: 'subTitleB',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}, {\r\n\t\t\tid: 3, \r\n\t\t\ttitle: 'titleC',\r\n\t\t\tsubTitle: 'subTitleC',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}]\r\n\t});\r\n}(window || undefined));\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./app/webpack/data.js?");
 
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************!*\
-  !*** multi ./app/webpack/Container.js ./app/webpack/Header.js ./app/webpack/app.js ./app/webpack/data.js ***!
-  \***********************************************************************************************************/
+/*!********************************************************************************!*\
+  !*** multi ./app/webpack/app.js ./app/webpack/data.js ./app/webpack/Header.js ***!
+  \********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/Container.js */\"./app/webpack/Container.js\");\n__webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/Header.js */\"./app/webpack/Header.js\");\n__webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/app.js */\"./app/webpack/app.js\");\nmodule.exports = __webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/data.js */\"./app/webpack/data.js\");\n\n\n//# sourceURL=webpack:///multi_./app/webpack/Container.js_./app/webpack/Header.js_./app/webpack/app.js_./app/webpack/data.js?");
+eval("__webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\app.js */\"./app/webpack/app.js\");\n__webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\data.js */\"./app/webpack/data.js\");\nmodule.exports = __webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\Header.js */\"./app/webpack/Header.js\");\n\n\n//# sourceURL=webpack:///multi_./app/webpack/app.js_./app/webpack/data.js_./app/webpack/Header.js?");
 
 /***/ })
 

@@ -1,5 +1,4 @@
 import {productData} from './data';
-import Container from './Container';
 import Header from './Header';
 
 (function(global) {
@@ -9,8 +8,7 @@ import Header from './Header';
 			
 		},
 		components: {
-			'Container': Container,
 			'Header': Header
 		}
 	});
-})(window);
+})(window || this);

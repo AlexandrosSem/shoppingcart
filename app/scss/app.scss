@@ -4,8 +4,14 @@ html {
   padding: 0;
   box-sizing: border-box;
 }
+
 *, *:before, *:after {
   margin: inherit;
   padding: inherit;
   box-sizing: inherit;
+}
+
+#rootContainer {
+  height: 100vh;
+  background-color: #4a4a4a;
 }

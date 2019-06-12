@@ -8,6 +8,6 @@ html {
   padding: inherit;
   box-sizing: inherit; }
 
-#main {
+#rootContainer {
   height: 100vh;
   background-color: #4a4a4a; }
