@@ -1,17 +1,21 @@
 export default {
-    props: ['Page'],
-    template: `<nav class="navbar is-light" v-bind:Page="this.Value">
-        <a class="navbar-item is-active" href="#" v-on:click="this.Value = 'Products'">Products</a>
-        <a class="navbar-item" href="#" v-on:click="this.Value = 'Cart'">Cart</a>
+    props: ['page'],
+    template: `<nav class="navbar is-light">
+        <a class="navbar-item is-active" href="#" v-on:click="changePageDisplay('Products')">Products</a>
+        <a class="navbar-item" href="#" v-on:click="changePageDisplay('Cart')">Cart</a>
     </nav>`,
     data() {
         return {
-            Value: 'products'
+            propPageValue: ''
         };
     },
-    watch: {
-        Value: function(pValue) {
+    methods: {
+        changePageDisplay(pValue) {
+            this.propPageValue = pValue;
             this.$emit('input', pValue);
         }
+    },
+    created() {
+        this.propPageValue = this.page;
     }
 };

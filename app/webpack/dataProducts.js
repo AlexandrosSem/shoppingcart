@@ -21,4 +21,4 @@ export default {
 		price: 0,
 		description: ''
 	}]
-}
+};
