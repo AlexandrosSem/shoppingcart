@@ -1,14 +1,15 @@
-import {productData} from './data';
 import Header from './Header';
+import Products from './dataProducts'; 
 
-(function(global) {
-	global.vm = new Vue({
-		el: '#app',
-		data: {
-			
+window.OBJ = new Vue({
+	el: '#app',
+	data: {
+		Local:{
+			PageDisplay: 'cart'
 		},
-		components: {
-			'Header': Header
-		}
-	});
-})(window || this);
+		Products: Products
+	},
+	components: {
+		'Header': Header
+	}
+});

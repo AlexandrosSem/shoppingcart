@@ -94,7 +94,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\r\n    template: `<nav class=\"navbar is-dark\">\r\n        <a class=\"navbar-item is-active\" href=\"#\">Products</a>\r\n        <a class=\"navbar-item\" href=\"#\">Cart</a>\r\n    </nav>`,\r\n    data() {\r\n        return {};\r\n    }\r\n});\n\n//# sourceURL=webpack:///./app/webpack/Header.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n    props: ['Page'],\n    template: `<nav class=\"navbar is-light\" v-bind:Page=\"this.Value\">\n        <a class=\"navbar-item is-active\" href=\"#\" v-on:click=\"this.Value = 'Products'\">Products</a>\n        <a class=\"navbar-item\" href=\"#\" v-on:click=\"this.Value = 'Cart'\">Cart</a>\n    </nav>`,\n    data() {\n        return {\n            Value: 'products'\n        };\n    },\n    watch: {\n        Value: function(pValue) {\n            this.$emit('input', pValue);\n        }\n    }\n});\n\n//# sourceURL=webpack:///./app/webpack/Header.js?");
 
 /***/ }),
 
@@ -106,30 +106,30 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _data__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./data */ \"./app/webpack/data.js\");\n/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Header */ \"./app/webpack/Header.js\");\n\r\n\r\n\r\n(function(global) {\r\n\tglobal.vm = new Vue({\r\n\t\tel: '#app',\r\n\t\tdata: {\r\n\t\t\t\r\n\t\t},\r\n\t\tcomponents: {\r\n\t\t\t'Header': _Header__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\r\n\t\t}\r\n\t});\r\n})(window || undefined);\r\n\n\n//# sourceURL=webpack:///./app/webpack/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Header__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Header */ \"./app/webpack/Header.js\");\n/* harmony import */ var _dataProducts__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dataProducts */ \"./app/webpack/dataProducts.js\");\n\n \n\nwindow.OBJ = new Vue({\n\tel: '#app',\n\tdata: {\n\t\tLocal:{\n\t\t\tPageDisplay: 'cart'\n\t\t},\n\t\tProducts: _dataProducts__WEBPACK_IMPORTED_MODULE_1__[\"default\"]\n\t},\n\tcomponents: {\n\t\t'Header': _Header__WEBPACK_IMPORTED_MODULE_0__[\"default\"]\n\t}\n});\n\n\n//# sourceURL=webpack:///./app/webpack/app.js?");
 
 /***/ }),
 
-/***/ "./app/webpack/data.js":
-/*!*****************************!*\
-  !*** ./app/webpack/data.js ***!
-  \*****************************/
-/*! exports provided: productData */
+/***/ "./app/webpack/dataProducts.js":
+/*!*************************************!*\
+  !*** ./app/webpack/dataProducts.js ***!
+  \*************************************/
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"productData\", function() { return productData; });\nconst productData = (function(global) {\r\n\treturn (global.data = {\r\n\t\ttitle: 'test 2',\r\n\t\tproducts: [{\r\n\t\t\tid: 1,\r\n\t\t\ttitle: 'titleA',\r\n\t\t\tsubTitle: 'subTitleA',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}, {\r\n\t\t\tid: 2,\r\n\t\t\ttitle: 'titleB',\r\n\t\t\tsubTitle: 'subTitleB',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}, {\r\n\t\t\tid: 3, \r\n\t\t\ttitle: 'titleC',\r\n\t\t\tsubTitle: 'subTitleC',       \r\n\t\t\timageURL: '',\r\n\t\t\tprice: 0,\r\n\t\t\tdescription: ''\r\n\t\t}]\r\n\t});\r\n}(window || undefined));\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./app/webpack/data.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony default export */ __webpack_exports__[\"default\"] = ({\n\tproducts: [{\n\t\tid: 1,\n\t\ttitle: 'titleA',\n\t\tsubTitle: 'subTitleA',       \n\t\timageURL: '',\n\t\tprice: 0,\n\t\tdescription: ''\n\t}, {\n\t\tid: 2,\n\t\ttitle: 'titleB',\n\t\tsubTitle: 'subTitleB',       \n\t\timageURL: '',\n\t\tprice: 0,\n\t\tdescription: ''\n\t}, {\n\t\tid: 3, \n\t\ttitle: 'titleC',\n\t\tsubTitle: 'subTitleC',       \n\t\timageURL: '',\n\t\tprice: 0,\n\t\tdescription: ''\n\t}]\n});\n\n//# sourceURL=webpack:///./app/webpack/dataProducts.js?");
 
 /***/ }),
 
 /***/ 0:
-/*!********************************************************************************!*\
-  !*** multi ./app/webpack/app.js ./app/webpack/data.js ./app/webpack/Header.js ***!
-  \********************************************************************************/
+/*!****************************************************************************************!*\
+  !*** multi ./app/webpack/Header.js ./app/webpack/app.js ./app/webpack/dataProducts.js ***!
+  \****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\app.js */\"./app/webpack/app.js\");\n__webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\data.js */\"./app/webpack/data.js\");\nmodule.exports = __webpack_require__(/*! C:\\Users\\Alexandros\\ShoppingCart\\app\\webpack\\Header.js */\"./app/webpack/Header.js\");\n\n\n//# sourceURL=webpack:///multi_./app/webpack/app.js_./app/webpack/data.js_./app/webpack/Header.js?");
+eval("__webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/Header.js */\"./app/webpack/Header.js\");\n__webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/app.js */\"./app/webpack/app.js\");\nmodule.exports = __webpack_require__(/*! /home/publyo/Desktop/GIT/shoppingcart/app/webpack/dataProducts.js */\"./app/webpack/dataProducts.js\");\n\n\n//# sourceURL=webpack:///multi_./app/webpack/Header.js_./app/webpack/app.js_./app/webpack/dataProducts.js?");
 
 /***/ })
 
