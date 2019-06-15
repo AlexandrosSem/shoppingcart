@@ -7,7 +7,7 @@
 	<body>
 		<div id="rootContainer" class="container">
 			<div is="Header" v-model="local.pageDisplay"></div>
-			<div is="Product" v-for="product in products" v-bind:product="product" v-bind:key="product.id"></div>
+			<div v-bind:is="local.pageDisplay" v-bind:params="params"></div>
 		</div>
 		<script src="./lib/vue/vue.js"></script>
 		<script src="./js/scripts.min.js"></script>
