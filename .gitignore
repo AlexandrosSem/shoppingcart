@@ -6,6 +6,10 @@ app/babel/webpack/
 app/js/babel/
 app/css/sass/
 
+# Package-lock
+# Cannot be ignored: https://docs.npmjs.com/files/package-lock.json
+#package-lock.json
+
 # Logs
 logs
 *.log
