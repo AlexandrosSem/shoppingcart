@@ -2,9 +2,9 @@
 dist/
 
 # Build files
-#app/babel/webpack/
-#app/js/babel/
-#app/css/sass/
+app/babel/webpack/
+app/js/babel/
+app/css/sass/
 
 # Logs
 logs
