@@ -44,8 +44,7 @@ gulp.task('image', gulp.series('clean:image', function imageBuild(pFnDone) {
 gulp.task('sass', function(pFnDone) {
 	return gulp.src('app/scss/**/*.scss')
 		.pipe(sass())
-		.pipe(concat('scssStyles.css'))
-		.pipe(gulp.dest('app/css'));
+		.pipe(gulp.dest('app/css/sass'));
 });
 
 gulp.task('css', gulp.series('clean:css', function cssBuild(pFnDone) {
