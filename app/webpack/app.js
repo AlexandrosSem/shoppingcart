@@ -1,6 +1,6 @@
 import Header from './Header';
-import products from './dataProducts';
 import Product from './Product';
+import products from './dataProducts';
 window.vueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
