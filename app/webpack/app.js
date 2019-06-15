@@ -1,22 +1,16 @@
 import Header from './Header';
-import Products from './Products';
-import Cart from './Cart';
-import appData from './dataProducts'; 
-
-window.OBJ = new Vue({
+import products from './dataProducts';
+import Product from './Product';
+window.vueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
 		local: {
 			pageDisplay: 'Products'
 		},
-		appData: appData
-	},
-	computed: {
-		products() { return this.appData.products; }
+		products: products.products
 	},
 	components: {
 		Header,
-		Products,
-		Cart
+		Product
 	}
 });

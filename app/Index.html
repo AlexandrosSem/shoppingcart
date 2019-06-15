@@ -2,15 +2,12 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="./lib/bulma/bulma.min.css" />
 		<link rel="stylesheet" type="text/css" href="./css/styles.min.css" />
-		<title>Test</title>
+		<title>Shopping Cart</title>
 	</head>
 	<body>
 		<div id="rootContainer" class="container">
-			<div is="Header" v-model="local.pageDisplay">
-			</div>
-			<div>
-				<div v-bind:is="local.pageDisplay"></div>
-			</div>
+			<div is="Header" v-model="local.pageDisplay"></div>
+			<div is="Product" v-for="product in products" v-bind:product="product" v-bind:key="product.id"></div>
 		</div>
 		<script src="./lib/vue/vue.js"></script>
 		<script src="./js/scripts.min.js"></script>

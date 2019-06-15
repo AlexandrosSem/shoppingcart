@@ -10,7 +10,9 @@ export default {
         <a class="navbar-item" v-bind:class="{ 'is-active':(this.pageNow == 'Cart') }" href="#" v-on:click="setPage('Cart');">Cart</a>
     </nav>`,
     methods: {
-        setPage(pPage) { this.pageNow = pPage; }
+        setPage(pPage) {
+            this.pageNow = pPage;
+        }
     },
     watch:{
         pageNow() {
