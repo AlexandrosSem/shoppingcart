@@ -5,6 +5,9 @@ import appData from './dataProducts';
 window.vueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
+		generalState: {
+			userId: 1
+		},
 		local: {
 			pageDisplay: 'Products'
 		},

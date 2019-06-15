@@ -4,6 +4,6 @@ export default {
         CART HERE
     </div>`,
     data () {
-        return { };
+        return { userId: this.$root.generalState.userId };
     }
 };
