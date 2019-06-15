@@ -1,5 +1,7 @@
 import Header from './Header';
-import products from './dataProducts'; 
+import Products from './Products';
+import Cart from './Cart';
+import appData from './dataProducts'; 
 
 window.OBJ = new Vue({
 	el: '#rootContainer',
@@ -7,9 +9,14 @@ window.OBJ = new Vue({
 		local: {
 			pageDisplay: 'Products'
 		},
-		products: products
+		appData: appData
+	},
+	computed: {
+		products() { return this.appData.products; }
 	},
 	components: {
-		Header
+		Header,
+		Products,
+		Cart
 	}
 });
