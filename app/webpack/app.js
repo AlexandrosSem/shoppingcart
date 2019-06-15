@@ -2,17 +2,12 @@ import Header from './Header';
 import products from './dataProducts'; 
 
 window.OBJ = new Vue({
-	el: '#app',
+	el: '#rootContainer',
 	data: {
 		local: {
 			pageDisplay: 'Products'
 		},
-		products
-	},
-	methods: {
-		a (pEventValue) {
-			console.log(pEventValue);
-		}
+		products: products
 	},
 	components: {
 		Header

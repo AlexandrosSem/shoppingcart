@@ -1,21 +1,20 @@
 export default {
-    props: ['page'],
-    template: `<nav class="navbar is-light">
-        <a class="navbar-item is-active" href="#" v-on:click="changePageDisplay('Products')">Products</a>
-        <a class="navbar-item" href="#" v-on:click="changePageDisplay('Cart')">Cart</a>
-    </nav>`,
+    props: ['value'], // value is set by v-model
     data() {
         return {
-            propPageValue: ''
+            pageNow: this.value // Make a "copy" of the parent variable
         };
     },
+    template: `<nav class="navbar is-light">
+        <a class="navbar-item" v-bind:class="{ 'is-active':(this.pageNow == 'Products') }" href="#" v-on:click="setPage('Products')">Products</a>
+        <a class="navbar-item" v-bind:class="{ 'is-active':(this.pageNow == 'Cart') }" href="#" v-on:click="setPage('Cart');">Cart</a>
+    </nav>`,
     methods: {
-        changePageDisplay(pValue) {
-            this.propPageValue = pValue;
-            this.$emit('input', pValue);
-        }
+        setPage(pPage) { this.pageNow = pPage; }
     },
-    created() {
-        this.propPageValue = this.page;
+    watch:{
+        pageNow() {
+            this.$emit('input', this.pageNow); // send an input event back
+        }
     }
 };
