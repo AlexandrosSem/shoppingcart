@@ -6,7 +6,8 @@ window.vueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
 		generalState: {
-			userId: 1
+			userId: 1,
+			productsInCart: []
 		},
 		local: {
 			pageDisplay: 'Products'
@@ -22,7 +23,7 @@ window.vueInstance = new Vue({
 				return {
 					products: this.products
 				}
-			} else {
+			} else if (this.local.pageDisplay == 'Cart') {
 				return {
 					cartInfo: {}
 				}

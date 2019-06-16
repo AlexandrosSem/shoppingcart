@@ -1,12 +1,12 @@
 export default {
     props: ['params'],
     template: `<div>
-        <template v-for="product in products" v-bind:key="product.id" >
+        <template v-for="product in products">
             <div class="box">
                 <div class="media">
                     <div class="media-center">
                         <div class="image is-128x128">
-                            <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                            <img v-bind:src="product.imageURL" alt="Image">
                         </div>
                     </div>
                     <div class="media-content">
@@ -15,6 +15,7 @@ export default {
                             <p>sub title: {{ product.subTitle }}</p>
                             <p>description: {{ product.description }}</p>
                             <p>price: {{ product.price }}</p>
+                            <a class="button is-success" v-on:click="addToCart(product)">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -25,5 +26,17 @@ export default {
         return {
             products: this.params.products
         };
+    },
+    methods: {
+        addToCart (pProduct) {
+            var tArrFiltered = this.$root.generalState.productsInCart.filter(function(pCurrProduct) {
+                return pCurrProduct.id === pProduct.id;
+            });
+            if (!tArrFiltered.length) {
+                this.$root.generalState.productsInCart.push(pProduct);
+            } else {
+                alert(`The product with title '${pProduct.title}' is already in the cart. For the moment only quantity one allowed!`);
+            }
+        }
     }
 };
