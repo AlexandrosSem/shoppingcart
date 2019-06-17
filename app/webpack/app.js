@@ -7,7 +7,7 @@ window.vueInstance = new Vue({
 	data: {
 		generalState: {
 			userId: 1,
-			productsInCart: []
+			productsInfoOnCart: {}
 		},
 		local: {
 			pageDisplay: 'Products'

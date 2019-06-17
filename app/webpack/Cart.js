@@ -15,7 +15,7 @@ export default {
                             <p>sub title: {{ product.subTitle }}</p>
                             <p>description: {{ product.description }}</p>
                             <p>price: {{ product.price }}</p>
-                            <a class="button is-danger" v-on:click="deleteFromCart(product)">Delete from cart</a>
+                            <a class="button is-danger" v-on:click="deleteFromCart(product.id)">Delete from cart</a>
                         </div>
                     </div>
                 </div>
@@ -24,17 +24,29 @@ export default {
     </div>`,
     data () {
         return {
-            products: this.$root.generalState.productsInCart
+            products: []
         };
     },
     methods: {
-        deleteFromCart(pProduct) {
-            const tIndex = this.$root.generalState.productsInCart.findIndex(function(pCurrProduct) {
-                return pCurrProduct.id === pProduct.id;
+        deleteFromCart(pProductId) {
+            const tProductsInfoOnCart = this.$root.generalState.productsInfoOnCart;
+            const tProducts = this.$root.appData.products;
+            const tTargetProduct = tProducts.find(function(pElement) {
+                return pElement.id === pProductId;
             });
-            if (tIndex > -1) {
-                this.$root.generalState.productsInCart.splice(tIndex, 1);
-            }
+            tTargetProduct.quantity += tProductsInfoOnCart[pProductId].quantity;
+            delete tProductsInfoOnCart[pProductId];
+            this.products = this.products.filter(function(pElement) {
+                return pElement.id !== pProductId;
+            });
         }
+    },
+    created() {
+        const tProductsInfoOnCart = this.$root.generalState.productsInfoOnCart;
+        const tProducts = this.$root.appData.products;
+        const tProductIds = Object.keys(tProductsInfoOnCart);
+        this.products = tProducts.filter(function(pElement) {
+            return (tProductIds.indexOf(pElement.id.toString()) > -1);
+        });
     }
 };

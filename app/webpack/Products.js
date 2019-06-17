@@ -1,7 +1,7 @@
 export default {
     props: ['params'],
     template: `<div>
-        <template v-for="product in products">
+        <template v-for="(product, index) in products">
             <div class="box">
                 <div class="media">
                     <div class="media-center">
@@ -15,7 +15,8 @@ export default {
                             <p>sub title: {{ product.subTitle }}</p>
                             <p>description: {{ product.description }}</p>
                             <p>price: {{ product.price }}</p>
-                            <a class="button is-success" v-on:click="addToCart(product)">Add to cart</a>
+                            <input id="productQuantity" type="number" name="quantity" v-model="productsQuantity[index]" step="1" min="1" v-bind:max="product.quantity" required />
+                            <a class="button is-success" v-on:click="addToCart(product.id, productsQuantity[index])">Add to cart</a>
                         </div>
                     </div>
                 </div>
@@ -24,19 +25,22 @@ export default {
     </div>`,
     data () {
         return {
-            products: this.params.products
+            products: this.params.products,
+            productsQuantity: this.params.products.map(function(pElement) {
+                return 1;
+            })
         };
     },
     methods: {
-        addToCart (pProduct) {
-            var tArrFiltered = this.$root.generalState.productsInCart.filter(function(pCurrProduct) {
-                return pCurrProduct.id === pProduct.id;
+        addToCart (pProductId, pProductQuantity) {
+            const tProductsInfoOnCart = this.$root.generalState.productsInfoOnCart;
+            const tProducts = this.$root.appData.products;
+            tProductsInfoOnCart[pProductId] = tProductsInfoOnCart[pProductId] || {quantity: 0};
+            tProductsInfoOnCart[pProductId].quantity += (+pProductQuantity);
+            const tTargetProduct = tProducts.find(function(pElement) {
+                return pElement.id === pProductId;
             });
-            if (!tArrFiltered.length) {
-                this.$root.generalState.productsInCart.push(pProduct);
-            } else {
-                alert(`The product with title '${pProduct.title}' is already in the cart. For the moment only quantity one allowed!`);
-            }
+            tTargetProduct.quantity -= (+pProductQuantity);
         }
     }
 };
