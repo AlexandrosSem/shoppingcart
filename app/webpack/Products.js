@@ -1,22 +1,22 @@
 export default {
     props: ['params'],
     template: `<div>
-        <template v-for="(product, index) in products">
+        <template v-for="productId in Object.keys(products)">
             <div class="box">
                 <div class="media">
                     <div class="media-center">
                         <div class="image is-128x128">
-                            <img v-bind:src="product.imageURL" alt="Image">
+                            <img v-bind:src="products[productId].imageURL" alt="Image">
                         </div>
                     </div>
                     <div class="media-content">
                         <div class="content">
-                            <p>title: {{ product.title }}</p>
-                            <p>sub title: {{ product.subTitle }}</p>
-                            <p>description: {{ product.description }}</p>
-                            <p>price: {{ product.price }}</p>
-                            <input id="productQuantity" type="number" name="quantity" v-model="productsQuantity[index]" step="1" min="1" v-bind:max="product.quantity" required />
-                            <a class="button is-success" v-on:click="addToCart(product.id, productsQuantity[index])">Add to cart</a>
+                            <p>Title: {{ products[productId].title }}</p>
+                            <p>Sub title: {{ products[productId].subTitle }}</p>
+                            <p>Description: {{ products[productId].description }}</p>
+                            <p>Unit Price: {{ products[productId].price }}</p>
+                            <p>Stock Quantity: {{ products[productId].stockQuantity }}</p>
+                            <button class="button is-success" v-bind:disabled="products[productId].stockQuantity < 1" v-on:click="addToCart(productId)">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -26,21 +26,16 @@ export default {
     data () {
         return {
             products: this.params.products,
-            productsQuantity: this.params.products.map(function(pElement) {
-                return 1;
-            })
+            productsInfoOnCart: this.params.productsInfoOnCart
         };
     },
     methods: {
-        addToCart (pProductId, pProductQuantity) {
-            const tProductsInfoOnCart = this.$root.generalState.productsInfoOnCart;
-            const tProducts = this.$root.appData.products;
-            tProductsInfoOnCart[pProductId] = tProductsInfoOnCart[pProductId] || {quantity: 0};
-            tProductsInfoOnCart[pProductId].quantity += (+pProductQuantity);
-            const tTargetProduct = tProducts.find(function(pElement) {
-                return pElement.id === pProductId;
-            });
-            tTargetProduct.quantity -= (+pProductQuantity);
+        addToCart (pProductId) {
+            let tProducts = this.products;
+            let tProductsInfoOnCart = this.productsInfoOnCart;
+            tProducts[pProductId].stockQuantity -= 1;
+            tProductsInfoOnCart[pProductId] = (tProductsInfoOnCart[pProductId] || {});
+            tProductsInfoOnCart[pProductId].quantityOnCart = (tProductsInfoOnCart[pProductId].quantityOnCart || 0) + 1;
         }
     }
 };

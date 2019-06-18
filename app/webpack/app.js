@@ -18,14 +18,19 @@ window.vueInstance = new Vue({
 		products() {
 			return this.appData.products;
 		},
+		productsInfoOnCart() {
+			return this.generalState.productsInfoOnCart;
+		},
 		params() {
 			if (this.local.pageDisplay == 'Products') {
 				return {
-					products: this.products
+					products: this.products,
+					productsInfoOnCart: this.productsInfoOnCart
 				}
 			} else if (this.local.pageDisplay == 'Cart') {
 				return {
-					cartInfo: {}
+					products: this.products,
+					productsInfoOnCart: this.productsInfoOnCart
 				}
 			}
 		}
