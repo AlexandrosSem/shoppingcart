@@ -1,22 +1,22 @@
 export default {
     props: ['params'],
     template: `<div>
-        <template v-for="objProduct in productsOnCart">
+        <template v-for="productInfo in productsInfoOnCart">
             <div class="box">
                 <div class="media">
                     <div class="media-center">
                         <div class="image is-128x128">
-                            <img v-bind:src="objProduct.product.imageURL" alt="Image">
+                            <img v-bind:src="productInfo.imageURL" alt="Image">
                         </div>
                     </div>
                     <div class="media-content">
                         <div class="content">
-                            <p>Title: {{ objProduct.product.title }}</p>
-                            <p>Sub title: {{ objProduct.product.subTitle }}</p>
-                            <p>Description: {{ objProduct.product.description }}</p>
-                            <p>Total Price: {{ objProduct.product.price * objProduct.cart.quantityOnCart}}</p>
-                            <p>Quantity On Cart: {{ objProduct.cart.quantityOnCart }}</p>
-                            <button class="button is-danger" v-on:click="deleteFromCart(objProduct.product.id)">Delete from cart</button>
+                            <p>Title: {{ productInfo.title }}</p>
+                            <p>Sub title: {{ productInfo.subTitle }}</p>
+                            <p>Description: {{ productInfo.description }}</p>
+                            <p>Total Price: {{ productInfo.price * productInfo.quantityOnCart}}</p>
+                            <p>Quantity On Cart: {{ productInfo.quantityOnCart }}</p>
+                            <button class="button is-danger" v-on:click="deleteFromCart(productInfo.id)">Delete from cart</button>
                         </div>
                     </div>
                 </div>
@@ -26,30 +26,29 @@ export default {
     data () {
         return {
             products: this.params.products,
-            productsInfoOnCart: this.params.productsInfoOnCart
+            productsInfoOnCart: this.params.productsInfoOnCart,
+            productsIndex: this.params.productsIndex
         };
     },
     computed: {
-        productsOnCart: function() {
-            var vm = this;
-            return Object.keys(this.productsInfoOnCart).map(function(pIndex) {
-                return {
-                    product: (vm.products[pIndex] || {}),
-                    cart: (vm.productsInfoOnCart[pIndex] || {})
-                }
-            })
-        }
+
     },
     methods: {
         deleteFromCart(pProductId) {
             let tProducts = this.products;
             let tProductsInfoOnCart = this.productsInfoOnCart;
-            console.log(tProductsInfoOnCart)
-
-            tProducts[pProductId].stockQuantity += 1;
-            tProductsInfoOnCart[pProductId].quantityOnCart -= 1;
-            if (tProductsInfoOnCart[pProductId].quantityOnCart === 0) {
-                delete tProductsInfoOnCart[pProductId];
+            const tProductsIndex = this.productsIndex;
+            tProducts[tProductsIndex[pProductId]].stockQuantity += 1;
+            const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
+                return pProductId === pEl.id;
+            });
+            if (tTargetIndex > -1) {
+                tProductsInfoOnCart[tTargetIndex].quantityOnCart -= 1;
+                if (tProductsInfoOnCart[tTargetIndex].quantityOnCart === 0) {
+                    tProductsInfoOnCart.splice(tTargetIndex, 1);
+                }
+            } else {
+                alert(`Product with ${pProductId} not found!`);
             }
         }
     }

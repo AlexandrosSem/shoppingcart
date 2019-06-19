@@ -7,7 +7,8 @@ window.vueInstance = new Vue({
 	data: {
 		generalState: {
 			userId: 1,
-			productsInfoOnCart: {}
+			productsInfoOnCart: [],
+			productsIndex: {}
 		},
 		local: {
 			pageDisplay: 'Products'
@@ -21,16 +22,25 @@ window.vueInstance = new Vue({
 		productsInfoOnCart() {
 			return this.generalState.productsInfoOnCart;
 		},
+		productsIndex() {
+			const that = this;
+			this.products.forEach(function(pEl, pIndex) {
+				that.generalState.productsIndex[pEl.id] = pIndex;
+			});
+			return this.generalState.productsIndex;
+		},
 		params() {
 			if (this.local.pageDisplay == 'Products') {
 				return {
 					products: this.products,
-					productsInfoOnCart: this.productsInfoOnCart
+					productsInfoOnCart: this.productsInfoOnCart,
+					productsIndex: this.productsIndex
 				}
 			} else if (this.local.pageDisplay == 'Cart') {
 				return {
 					products: this.products,
-					productsInfoOnCart: this.productsInfoOnCart
+					productsInfoOnCart: this.productsInfoOnCart,
+					productsIndex: this.productsIndex
 				}
 			}
 		}
