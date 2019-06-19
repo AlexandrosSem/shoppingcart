@@ -48,7 +48,7 @@ export default {
                     tProductsInfoOnCart.splice(tTargetIndex, 1);
                 }
             } else {
-                alert(`Product with ${pProductId} not found!`);
+                alert(`Product with ID = '${pProductId}' not found!`);
             }
         }
     }
