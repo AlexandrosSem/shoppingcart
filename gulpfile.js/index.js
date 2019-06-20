@@ -109,15 +109,15 @@ gulp.task('html', gulp.series('clean:html', function htmlBuild(pFnDone) {
 }));
 
 gulp.task('watch', function(pFnDone) {
-	gulp.watch('app/img/**/*.+(png|jpg|jpeg|gif|svg)', { readDelay: 250 }, gulp.series('image'))
-	gulp.watch('app/scss/**/*.scss', { readDelay: 250 }, gulp.series('sass'));
-	gulp.watch('app/css/**/*.css', { readDelay: 250 }, gulp.series('css'));
-	gulp.watch('app/webpack/**/*.js', { readDelay: 250 }, gulp.series('webpack'));
-	gulp.watch('app/babel/**/*.js', { readDelay: 250 }, gulp.series('babel'));
-	gulp.watch('app/js/**/*.js', { readDelay: 250 }, gulp.series('js'));
-	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], { readDelay: 250 }, gulp.series('lib'));
-	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], { readDelay: 250 }, gulp.series('html'));
-	gulp.watch('dist/**/*', { readDelay: 250 }, function ReloadBrowser(pFnDone) {
+	gulp.watch(['app/img/**/*.+(png|jpg|jpeg|gif|svg)'], { delay: 250 }, gulp.series('image'))
+	gulp.watch(['app/scss/**/*.scss'], { delay: 250 }, gulp.series('sass'));
+	gulp.watch(['app/css/**/*.css'], { delay: 250 }, gulp.series('css'));
+	gulp.watch(['app/webpack/**/*.js'], { delay: 250 }, gulp.series('webpack'));
+	gulp.watch(['app/babel/**/*.js'], { delay: 250 }, gulp.series('babel'));
+	gulp.watch(['app/js/**/*.js'], { delay: 250 }, gulp.series('js'));
+	gulp.watch(['app/lib/**/*', '!app/lib/.gitkeep'], { delay: 250 }, gulp.series('lib'));
+	gulp.watch(['app/**/*.+(html|htm)', '!app/lib'], { delay: 250 }, gulp.series('html'));
+	gulp.watch(['dist/**/*'], { delay: 250 }, function ReloadBrowser(pFnDone) {
 		browserSync.reload();
 		pFnDone();
 	});
