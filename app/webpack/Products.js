@@ -2,13 +2,13 @@ import Product from './Product';
 export default {
     props: ['params'],
     template: `<div>
-        <div is="Product" v-for="product in products" v-bind:params="{products: products, productsInfoOnCart: productsInfoOnCart, productsIndex: productsIndex, product: product}" v-bind:key="product.id"></div>
+        <div is="Product" v-for="Product in Products" v-bind:params="{Products, ProductsInfoOnCart, ProductsIndex, Product}" v-bind:key="Product.Id"></div>
     </div>`,
     data () {
         return {
-            products: this.params.products,
-            productsInfoOnCart: this.params.productsInfoOnCart,
-            productsIndex: this.params.productsIndex
+            Products: this.params.Products,
+            ProductsInfoOnCart: this.params.ProductsInfoOnCart,
+            ProductsIndex: this.params.ProductsIndex
         };
     },
     components: {

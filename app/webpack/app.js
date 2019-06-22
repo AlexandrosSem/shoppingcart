@@ -1,46 +1,46 @@
 import Header from './Header';
 import Products from './Products';
 import Cart from './Cart';
-import appData from './dataProducts';
-window.vueInstance = new Vue({
+import AppData from './DataProducts';
+window.VueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
-		generalState: {
-			userId: 1,
-			productsInfoOnCart: [],
-			productsIndex: {}
+		GeneralState: {
+			UserId: 1,
+			ProductsInfoOnCart: [],
+			ProductsIndex: {}
 		},
-		local: {
-			pageDisplay: 'Products'
+		Local: {
+			PageDisplay: 'Products'
 		},
-		appData: appData
+		AppData
 	},
 	computed: {
-		products() {
-			return this.appData.products;
+		Products() {
+			return this.AppData.Products;
 		},
-		productsInfoOnCart() {
-			return this.generalState.productsInfoOnCart;
+		ProductsInfoOnCart() {
+			return this.GeneralState.ProductsInfoOnCart;
 		},
-		productsIndex() {
+		ProductsIndex() {
 			const that = this;
-			this.products.forEach(function(pEl, pIndex) {
-				that.generalState.productsIndex[pEl.id] = pIndex;
+			this.Products.forEach(function(pEl, pIndex) {
+				that.GeneralState.ProductsIndex[pEl.Id] = pIndex;
 			});
-			return this.generalState.productsIndex;
+			return this.GeneralState.ProductsIndex;
 		},
-		params() {
-			if (this.local.pageDisplay == 'Products') {
+		Params() {
+			if (this.Local.PageDisplay === 'Products') {
 				return {
-					products: this.products,
-					productsInfoOnCart: this.productsInfoOnCart,
-					productsIndex: this.productsIndex
+					Products: this.Products,
+					ProductsInfoOnCart: this.ProductsInfoOnCart,
+					ProductsIndex: this.ProductsIndex
 				}
-			} else if (this.local.pageDisplay == 'Cart') {
+			} else if (this.Local.PageDisplay === 'Cart') {
 				return {
-					products: this.products,
-					productsInfoOnCart: this.productsInfoOnCart,
-					productsIndex: this.productsIndex
+					Products: this.Products,
+					ProductsInfoOnCart: this.ProductsInfoOnCart,
+					ProductsIndex: this.ProductsIndex
 				}
 			}
 		}
