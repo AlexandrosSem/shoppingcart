@@ -15,6 +15,7 @@ export default {
                     <p>Unit Price: {{ Product.Price }}</p>
                     <p>Stock Quantity: {{ Product.StockQuantity }}</p>
                     <button class="button is-success" v-bind:disabled="Product.StockQuantity < 1" v-on:click="AddToCart(Product.Id)">Add to cart</button>
+                    <button class="button is-success" v-bind:disabled="Product.StockQuantity < 1" v-on:click="AddAllToCart(Product.Id)">Add all to cart</button>
                 </div>
             </div>
         </div>
@@ -32,14 +33,14 @@ export default {
             let tProducts = this.Products;
             let tProductsInfoOnCart = this.ProductsInfoOnCart;
             const tProductsIndex = this.ProductsIndex;
-            tProducts[tProductsIndex[pProductId]].StockQuantity -= 1;
+            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
+            tCurrentProduct.StockQuantity -= 1;
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
             if (tTargetIndex > -1) {
                 tProductsInfoOnCart[tTargetIndex].QuantityOnCart += 1;
             } else {
-                const tCurrentProduct = tProducts[tProductsIndex[pProductId]];
                 const tObjProductOnCart = {
                     Id: tCurrentProduct.Id,
                     Title: tCurrentProduct.Title,
@@ -52,6 +53,31 @@ export default {
                 };
                 tProductsInfoOnCart.push(tObjProductOnCart);
             }
+        },
+        AddAllToCart(pProductId) {
+            let tProducts = this.Products;
+            let tProductsInfoOnCart = this.ProductsInfoOnCart;
+            const tProductsIndex = this.ProductsIndex;
+            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
+            const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
+                return pProductId === pEl.Id;
+            });
+            if (tTargetIndex > -1) {
+                tProductsInfoOnCart[tTargetIndex].QuantityOnCart += tCurrentProduct.StockQuantity;
+            } else {               
+                const tObjProductOnCart = {
+                    Id: tCurrentProduct.Id,
+                    Title: tCurrentProduct.Title,
+                    SubTitle: tCurrentProduct.SubTitle,
+                    ImageURL: tCurrentProduct.ImageURL,
+                    Price: tCurrentProduct.Price,
+                    Description: tCurrentProduct.Description,
+                    StockQuantity: 0,
+                    QuantityOnCart: tCurrentProduct.StockQuantity
+                };
+                tProductsInfoOnCart.push(tObjProductOnCart);
+            }
+            tCurrentProduct.StockQuantity = 0;
         }
     }
 };

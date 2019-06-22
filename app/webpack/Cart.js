@@ -17,6 +17,7 @@ export default {
                             <p>Total Price: {{ ProductInfo.Price * ProductInfo.QuantityOnCart}}</p>
                             <p>Quantity On Cart: {{ ProductInfo.QuantityOnCart }}</p>
                             <button class="button is-danger" v-on:click="DeleteFromCart(ProductInfo.Id)">Delete from cart</button>
+                            <button class="button is-danger" v-on:click="DeleteAllFromCart(ProductInfo.Id)">Delete all from cart</button>
                         </div>
                     </div>
                 </div>
@@ -38,7 +39,8 @@ export default {
             let tProducts = this.Products;
             let tProductsInfoOnCart = this.ProductsInfoOnCart;
             const tProductsIndex = this.ProductsIndex;
-            tProducts[tProductsIndex[pProductId]].StockQuantity += 1;
+            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
+            tCurrentProduct.StockQuantity += 1;
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
@@ -47,6 +49,22 @@ export default {
                 if (tProductsInfoOnCart[tTargetIndex].QuantityOnCart === 0) {
                     tProductsInfoOnCart.splice(tTargetIndex, 1);
                 }
+            } else {
+                alert(`Product with ID = '${pProductId}' not found!`);
+            }
+        },
+        DeleteAllFromCart(pProductId) {
+            let tProducts = this.Products;
+            let tProductsInfoOnCart = this.ProductsInfoOnCart;
+            const tProductsIndex = this.ProductsIndex;
+            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];        
+            const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
+                return pProductId === pEl.Id;
+            });
+            if (tTargetIndex > -1) {
+                tCurrentProduct.StockQuantity += tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
+                tProductsInfoOnCart[tTargetIndex].QuantityOnCart = 0;
+                tProductsInfoOnCart.splice(tTargetIndex, 1);
             } else {
                 alert(`Product with ID = '${pProductId}' not found!`);
             }
