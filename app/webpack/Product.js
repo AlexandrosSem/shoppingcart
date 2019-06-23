@@ -14,7 +14,8 @@ export default {
                     <p>Description: {{ Product.Description }}</p>
                     <p>Unit Price: {{ Product.Price }}</p>
                     <p>Stock Quantity: {{ Product.StockQuantity }}</p>
-                    <button class="button is-success" v-bind:disabled="Product.StockQuantity < 1" v-on:click="AddToCart(Product.Id)">Add to cart</button>
+                    <input type="number" class="input is-rounded" v-model="InputQuantity" min="1" step="1" v-bind:max="Product.StockQuantity" v-bind:disabled="Product.StockQuantity < 1" />
+                    <button class="button is-success" v-bind:disabled="(!Number.isInteger(+InputQuantity)) || (+InputQuantity < 1) || (+InputQuantity > Product.StockQuantity) || (Product.StockQuantity < 1)" v-on:click="AddToCart(Product.Id, +InputQuantity)">Add {{InputQuantity}} to cart</button>               
                     <button class="button is-success" v-bind:disabled="Product.StockQuantity < 1" v-on:click="AddAllToCart(Product.Id)">Add all to cart</button>
                 </div>
             </div>
@@ -22,6 +23,7 @@ export default {
     </div>`,
     data () {
         return {
+            InputQuantity: 1,
             Product: this.params.Product,
             Products: this.params.Products,
             ProductsInfoOnCart: this.params.ProductsInfoOnCart,
@@ -29,17 +31,17 @@ export default {
         };
     },
     methods: {
-        AddToCart (pProductId) {
+        AddToCart (pProductId, pQuantity) {
             let tProducts = this.Products;
             let tProductsInfoOnCart = this.ProductsInfoOnCart;
             const tProductsIndex = this.ProductsIndex;
             let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
-            tCurrentProduct.StockQuantity -= 1;
+            tCurrentProduct.StockQuantity -= pQuantity;
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
             if (tTargetIndex > -1) {
-                tProductsInfoOnCart[tTargetIndex].QuantityOnCart += 1;
+                tProductsInfoOnCart[tTargetIndex].QuantityOnCart += pQuantity;
             } else {
                 const tObjProductOnCart = {
                     Id: tCurrentProduct.Id,
@@ -49,7 +51,7 @@ export default {
                     Price: tCurrentProduct.Price,
                     Description: tCurrentProduct.Description,
                     StockQuantity: tCurrentProduct.StockQuantity,
-                    QuantityOnCart: 1
+                    QuantityOnCart: pQuantity
                 };
                 tProductsInfoOnCart.push(tObjProductOnCart);
             }
