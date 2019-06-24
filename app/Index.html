@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div id="rootContainer" class="container">
-			<div is="Header" v-model="Local.PageDisplay"></div>
+			<div is="Header" v-model="Local.PageDisplay" v-bind:params="{ProductsInfoOnCart: GeneralState.ProductsInfoOnCart}"></div>
 			<div v-bind:is="Local.PageDisplay" v-bind:params="Params"></div>
 		</div>
 		<script src="./lib/vue/vue.js"></script>
