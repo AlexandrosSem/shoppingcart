@@ -1,6 +1,10 @@
 export default {
     props: ['params'],
     template: `<div>
+        <div v-if="ProductsInfoOnCart.length > 0">
+            <span>Total amount to pay {{CalculateTotalAmountToPay}}$</span>
+            <button class="button is-success">Checkout</button>
+        </div>
         <template v-for="ProductInfo in ProductsInfoOnCart">
             <div class="box">
                 <div class="media">
@@ -28,13 +32,20 @@ export default {
     data () {
         return {
             InputQuantity: 1,
+            TotalAmountToPay: 0,
             Products: this.params.Products,
             ProductsInfoOnCart: this.params.ProductsInfoOnCart,
             ProductsIndex: this.params.ProductsIndex
         };
     },
     computed: {
-
+        CalculateTotalAmountToPay() {
+            let tTotalAmountToPay = 0;
+            this.ProductsInfoOnCart.forEach(function(pEl) {
+                tTotalAmountToPay += (pEl.Price * pEl.QuantityOnCart);
+            });
+            return (this.TotalAmountToPay = tTotalAmountToPay);
+        }
     },
     methods: {
         DeleteFromCart(pProductId, pQuantity) {
