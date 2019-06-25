@@ -6,7 +6,7 @@ window.VueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
 		GeneralState: {
-			UserId: 1,
+			UserId: '1',
 			ProductsInfoOnCart: [],
 			ProductsIndex: {}
 		},
