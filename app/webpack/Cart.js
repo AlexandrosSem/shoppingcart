@@ -3,7 +3,7 @@ export default {
     props: ['params'],
     template: `<div>
         <div v-if="ProductsInfoOnCart.length > 0">
-            <span>Total amount to pay {{CalculateTotalAmountToPay}}$</span>
+            <span>Total amount to pay {{CalculateTotalAmountToPay}}£</span>
             <button class="button is-success">Checkout</button>
         </div>
         <div is="ProductOnCart" v-for="ProductInfo in ProductsInfoOnCart" v-bind:params="{Products, ProductsInfoOnCart, ProductsIndex, ProductInfo}" v-bind:key="ProductInfo.Id"></div>

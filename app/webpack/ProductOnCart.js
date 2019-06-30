@@ -12,7 +12,7 @@ export default {
                     <p>Title: {{ ProductInfo.Title }}</p>
                     <p>Sub title: {{ ProductInfo.SubTitle }}</p>
                     <p>Description: {{ ProductInfo.Description }}</p>
-                    <p>Total Price: {{ ProductInfo.Price * ProductInfo.QuantityOnCart}}</p>
+                    <p>Total Price: {{ ProductInfo.Price * ProductInfo.QuantityOnCart}}£</p>
                     <p>Quantity On Cart: {{ ProductInfo.QuantityOnCart }}</p>
                     <input type="number" class="input is-rounded productQuantity" v-model="InputQuantity" min="1" step="1" v-bind:max="ProductInfo.QuantityOnCart" />
                     <button class="button is-danger" v-bind:disabled="(!Number.isInteger(+InputQuantity)) || (+InputQuantity < 1) || (+InputQuantity > ProductInfo.QuantityOnCart)" v-on:click="DeleteFromCart(ProductInfo.Id, +InputQuantity)">Delete {{InputQuantity}} from cart</button>

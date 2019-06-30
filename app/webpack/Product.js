@@ -12,7 +12,7 @@ export default {
                     <p>Title: {{ Product.Title }}</p>
                     <p>Sub title: {{ Product.SubTitle }}</p>
                     <p>Description: {{ Product.Description }}</p>
-                    <p>Unit Price: {{ Product.Price }}</p>
+                    <p>Unit Price: {{ Product.Price }}£</p>
                     <p>Stock Quantity: {{ Product.StockQuantity }}</p>
                     <input type="number" class="input is-rounded productQuantity" v-model="InputQuantity" min="1" step="1" v-bind:max="Product.StockQuantity" v-bind:disabled="Product.StockQuantity < 1" />
                     <button class="button is-success" v-bind:disabled="(!Number.isInteger(+InputQuantity)) || (+InputQuantity < 1) || (+InputQuantity > Product.StockQuantity) || (Product.StockQuantity < 1)" v-on:click="AddToCart(Product.Id, +InputQuantity)">Add {{InputQuantity}} to cart</button>               

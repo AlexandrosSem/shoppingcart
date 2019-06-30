@@ -8,16 +8,23 @@ export default {
     },
     template: `<nav class="navbar is-light">
         <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Products') }" href="#" v-on:click="SetPage('Products')">Products</a>
-        <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Cart') }" href="#" v-on:click="SetPage('Cart');">({{CountAllProductsOnCard}}) Cart</a>
+        <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Cart') }" href="#" v-on:click="SetPage('Cart');">({{TotalProductsOnCart.TotalCount}}) <img width="64px" height="64px" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/shopping-cart-1557464-1329241.png" /> ({{TotalProductsOnCart.TotalPrice}}£)</a>
     </nav>`,
     computed: {
-        CountAllProductsOnCard() {
-			let tTotalCount = 0;
-			this.ProductsInfoOnCart.forEach(function(pEl) {
-				tTotalCount += pEl.QuantityOnCart;
-			});
-			return tTotalCount;
-		},
+        TotalProductsOnCart() {
+            let tTotalCount = 0;
+            let tTotalPrice = 0;
+            this.ProductsInfoOnCart.forEach(function(pEl) {
+                const tProductQuantity = pEl.QuantityOnCart;
+                const tProductPrice = pEl.Price;
+                tTotalCount += tProductQuantity;
+                tTotalPrice += tProductQuantity * tProductPrice;
+            });
+            return {
+                TotalCount: tTotalCount,
+                TotalPrice: tTotalPrice
+            };
+        }
     },
     methods: {
         SetPage: function(pPage) {
