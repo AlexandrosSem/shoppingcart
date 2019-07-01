@@ -8,7 +8,18 @@ export default {
     },
     template: `<nav class="navbar is-light">
         <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Products') }" href="#" v-on:click="SetPage('Products')">Products</a>
-        <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Cart') }" href="#" v-on:click="SetPage('Cart');">({{TotalProductsOnCart.TotalCount}}) <img width="64px" height="64px" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/shopping-cart-1557464-1329241.png" /> ({{TotalProductsOnCart.TotalPrice}}£)</a>
+        <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Cart') }" href="#" v-on:click="SetPage('Cart');">
+            <span v-if="ProductsInfoOnCart.length > 0">
+                ({{TotalProductsOnCart.TotalCount}})
+            </span>
+            <span v-else>
+                (Empty)
+            </span>
+            <img width="64px" height="64px" src="https://cdn.iconscout.com/icon/premium/png-256-thumb/shopping-cart-1557464-1329241.png" />
+            <span v-if="ProductsInfoOnCart.length > 0">
+                ({{TotalProductsOnCart.TotalPrice}}£)
+            </span>
+        </a>
     </nav>`,
     computed: {
         TotalProductsOnCart() {
