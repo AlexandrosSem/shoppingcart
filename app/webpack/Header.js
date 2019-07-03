@@ -20,6 +20,7 @@ export default {
                 ({{TotalProductsOnCart.TotalPrice}}£)
             </span>
         </a>
+        <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Signup') }" href="#" v-on:click="SetPage('Signup')">Signup</a>
     </nav>`,
     computed: {
         TotalProductsOnCart() {

@@ -2,20 +2,24 @@ import Header from './Header';
 import Products from './Products';
 import Cart from './Cart';
 import AppData from './DataProducts';
+import UsersData from './Users';
 window.VueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
 		GeneralState: {
-			UserId: '1',
 			ProductsInfoOnCart: [],
 			ProductsIndex: {}
 		},
 		Local: {
 			PageDisplay: 'Products'
 		},
-		AppData
+		AppData,
+		UsersData
 	},
 	computed: {
+		Users() {
+			return this.UsersData.Users;
+		},
 		Products() {
 			return this.AppData.Products;
 		},
@@ -41,6 +45,10 @@ window.VueInstance = new Vue({
 					Products: this.Products,
 					ProductsInfoOnCart: this.ProductsInfoOnCart,
 					ProductsIndex: this.ProductsIndex
+				}
+			} else if (this.Local.PageDisplay === 'Signup') {
+				return {
+					Users: this.Users
 				}
 			}
 		}
