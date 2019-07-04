@@ -43,7 +43,7 @@ export default {
             this.PageNow = pPage;
         }
     },
-    watch:{
+    watch: {
         PageNow: function() {
             this.$emit('input', this.PageNow); // send an input event back
         }

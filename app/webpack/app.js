@@ -1,6 +1,7 @@
 import Header from './Header';
 import Products from './Products';
 import Cart from './Cart';
+import Signup from './Signup';
 import AppData from './DataProducts';
 import UsersData from './Users';
 window.VueInstance = new Vue({
@@ -53,9 +54,15 @@ window.VueInstance = new Vue({
 			}
 		}
 	},
+	methods: {
+		AddUser(pEvent) {
+			this.UsersData.Users = pEvent;
+		}
+	},
 	components: {
 		Header,
 		Products,
-		Cart
+		Cart,
+		Signup
 	}
 });
