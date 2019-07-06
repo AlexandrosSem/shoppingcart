@@ -57,6 +57,8 @@ window.VueInstance = new Vue({
 	methods: {
 		AddUser(pEvent) {
 			this.UsersData.Users = pEvent;
+			// We can confirm the addition of the user here
+			//console.log(this.UsersData.Users);
 		}
 	},
 	components: {
