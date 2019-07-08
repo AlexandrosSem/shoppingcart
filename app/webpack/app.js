@@ -2,6 +2,7 @@ import Header from './Header';
 import Products from './Products';
 import Cart from './Cart';
 import Signup from './Signup';
+import Login from './Login';
 import AppData from './DataProducts';
 import UsersData from './Users';
 window.VueInstance = new Vue({
@@ -65,6 +66,7 @@ window.VueInstance = new Vue({
 		Header,
 		Products,
 		Cart,
-		Signup
+		Signup,
+		Login
 	}
 });
