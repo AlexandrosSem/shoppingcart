@@ -72,13 +72,15 @@ export default {
                 Address: this.Address,
                 Password: this.Password
             });
+            this.ClearForm();
+        },
+        ClearForm() {
             this.FirstName = '';
             this.LastName = '';
             this.Address = '';
             this.Email = '';
             this.Gender = 'male';
             this.Password = '';
-            this.$emit('users-changed', this.Users); // send a custom event back
         }
     }
 };
