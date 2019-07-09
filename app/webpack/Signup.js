@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         SignupUser() {
-            this.Users.push({
+            const tUserData = {
                 Id: (this.GetLastUserId + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
                 Email: this.Email,
                 Gender: this.Gender,
@@ -71,7 +71,8 @@ export default {
                 LastName: this.LastName,
                 Address: this.Address,
                 Password: this.Password
-            });
+            };
+            this.AddUser(tUserData);
             this.ClearForm();
         },
         ClearForm() {

@@ -1,6 +1,6 @@
 export default {
     computed: {
-        GetLastUserId: function() {
+        GetLastUserId() {
             let tMaxId = 0;
             this.Users.forEach(function(pEl) {
                 const tCurrentId = +pEl.Id;
@@ -9,6 +9,11 @@ export default {
                 }
             });
             return tMaxId;
+        }
+    },
+    methods: {
+        AddUser(pObjData) {
+            this.Users.push(pObjData);
         }
     }
 };
