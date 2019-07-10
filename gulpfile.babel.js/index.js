@@ -36,14 +36,6 @@ function clearHtml() {
 	return del(['dist/**/*.+(html|htm)', '!dist/lib', '!dist/lib/**/*.+(html|htm)']);
 }
 
-function clearBabel() {
-	return del(['app/js/babel/**']);
-}
-
-function clearWebpack() {
-	return del(['app/babel/webpack/**']);
-}
-
 function clearJs() {
 	return del(['dist/js/**']);
 }
@@ -56,13 +48,8 @@ function buildImage() {
 
 function buildSass() {
 	return src('app/scss/**/*.scss')
-		.pipe(sass())
-		.pipe(dest('app/css/sass'));
-}
-
-function buildCss() {
-	return src('app/css/**/*.css')
 		.pipe(plumber())
+		.pipe(sass())
 		.pipe(concat('styles.css'))
 		.pipe(dest('dist/css', { overwrite: true }))
 		.pipe(rename('styles.min.css'))
@@ -72,25 +59,12 @@ function buildCss() {
 
 function buildWebpack() {
 	return src('app/webpack/**/*.js')
+		.pipe(plumber())
 		.pipe(webpack({
 			mode: 'development'
 		}, compiler, function (err, stats) { }))
-		.pipe(rename('webpack.js'))
-		.pipe(dest('app/babel/webpack'));
-}
-
-function buildBabel() {
-	return src('app/babel/**/*.js')
-		.pipe(plumber())
 		.pipe(babel({ presets: ['@babel/preset-env'], sourceType: 'script' }))
-		.pipe(dest('app/js/babel'));
-}
-
-function buildJs() {
-	return src('app/js/**/*.js')
-		.pipe(plumber())
-		//.pipe(deporder()) // Ensure dependency order
-		.pipe(concat('scripts.js'))
+		.pipe(rename('scripts.js'))
 		.pipe(dest('dist/js'))
 		.pipe(rename('scripts.min.js'))
 		//.pipe(stripdebug()) // Remove debug lines
@@ -109,7 +83,7 @@ function buildHtml() {
 		.pipe(dest('dist'));
 }
 
-function taskConnect(cb) {
+function serverInit(cb) {
 	browserSync.init({
 		server: { baseDir: 'dist/', directory: true },
 		open: false,
@@ -119,16 +93,13 @@ function taskConnect(cb) {
 	cb();
 }
 
-function taskWatch(cb) {
-	watch(['app/img/**/*.+(png|jpg|jpeg|gif|svg)'], { delay: 250 }, taskImage);
-	watch(['app/scss/**/*.scss'], { delay: 250 }, taskSass);
-	watch(['app/css/**/*.css'], { delay: 250 }, taskCss);
-	watch(['app/webpack/**/*.js'], { delay: 250 }, taskWebpack);
-	watch(['app/babel/**/*.js'], { delay: 250 }, taskBabel);
-	watch(['app/js/**/*.js'], { delay: 250 }, taskJs);
-	watch(['app/lib/**/*', '!app/lib/.gitkeep'], { delay: 250 }, taskLib);
-	watch(['app/**/*.+(html|htm)', '!app/lib'], { delay: 250 }, taskHtml);
-	watch(['dist/**/*'], { delay: 250 }, function ReloadBrowser(cb) {
+function watchFiles(cb) {
+	watch(['app/img/**/*.+(png|jpg|jpeg|gif|svg)'], taskImage);
+	watch(['app/scss/**/*.scss'], taskSass);
+	watch(['app/webpack/**/*.js'], taskWebpack);
+	watch(['app/lib/**/*', '!app/lib/.gitkeep'], taskLib);
+	watch(['app/**/*.+(html|htm)', '!app/lib'], taskHtml);
+	watch(['dist/**/*'], function ReloadBrowser(cb) {
 		browserSync.reload();
 		cb();
 	});
@@ -136,26 +107,18 @@ function taskWatch(cb) {
 }
 
 const taskImage   = series(clearImage, buildImage);
-const taskSass    = series(buildSass);
-const taskCss     = series(clearCss, buildCss);
-const taskWebpack = series(clearWebpack, buildWebpack);
-const taskBabel   = series(clearBabel, buildBabel);
-const taskJs      = series(clearJs, buildJs);
+const taskSass    = series(clearCss, buildSass);
+const taskWebpack = series(clearJs, buildWebpack);
 const taskLib     = series(clearLib, buildLib);
 const taskHtml    = series(clearHtml, buildHtml);
+const taskConnect = series(serverInit);
+const taskWatch   = series(watchFiles);
 const taskBuild   = series(
 	clearDist,
 	parallel(
 		taskImage,
-		series(
-			taskSass,
-			taskCss
-		),
-		series(
-			taskWebpack,
-			taskBabel,
-			taskJs
-		),
+		taskSass,
+		taskWebpack,
 		taskLib,
 		taskHtml
 	)

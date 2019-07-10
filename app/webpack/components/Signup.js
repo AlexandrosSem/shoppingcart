@@ -1,4 +1,4 @@
-import UserMixin from './mixins/UserMixin';
+import UserMixin from '../mixins/UserMixin';
 export default {
     props: ['params'],
     mixins: [UserMixin], // Mixin

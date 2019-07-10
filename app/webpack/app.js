@@ -1,9 +1,12 @@
-import Header from './Header';
-import Products from './Products';
-import Cart from './Cart';
-import Signup from './Signup';
-import Login from './Login';
-import AppData from './AppData';
+// Data
+import AppData from './data/AppData';
+// Components
+import Header from './components/Header';
+import Products from './components/Products';
+import Cart from './components/Cart';
+import Signup from './components/Signup';
+import Login from './components/Login';
+// 
 window.VueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
