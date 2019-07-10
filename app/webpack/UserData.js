@@ -1,6 +1,5 @@
 // We can save the hash of course in the future, for simplicity i just put password for now.
-export default {
-    Users: [{
+export default [{
         Id: '1',
         Email: 'a@gmail.com',
         Gender: 'Male',
@@ -32,5 +31,4 @@ export default {
         LastName: 'Mönch',
         Address: 'mühlenweg 23',
         Password: 'd'
-    }]
-};
+}];

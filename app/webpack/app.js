@@ -3,8 +3,7 @@ import Products from './Products';
 import Cart from './Cart';
 import Signup from './Signup';
 import Login from './Login';
-import AppData from './DataProducts';
-import UsersData from './Users';
+import AppData from './AppData';
 window.VueInstance = new Vue({
 	el: '#rootContainer',
 	data: {
@@ -15,12 +14,11 @@ window.VueInstance = new Vue({
 		Local: {
 			PageDisplay: 'Products'
 		},
-		AppData,
-		UsersData
+		AppData
 	},
 	computed: {
 		Users() {
-			return this.UsersData.Users;
+			return this.AppData.Users;
 		},
 		Products() {
 			return this.AppData.Products;
@@ -41,17 +39,17 @@ window.VueInstance = new Vue({
 					Products: this.Products,
 					ProductsInfoOnCart: this.ProductsInfoOnCart,
 					ProductsIndex: this.ProductsIndex
-				}
+				};
 			} else if (this.Local.PageDisplay === 'Cart') {
 				return {
 					Products: this.Products,
 					ProductsInfoOnCart: this.ProductsInfoOnCart,
 					ProductsIndex: this.ProductsIndex
-				}
+				};
 			} else if (this.Local.PageDisplay === 'Signup') {
 				return {
 					Users: this.Users
-				}
+				};
 			}
 		}
 	},

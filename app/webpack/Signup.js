@@ -1,7 +1,7 @@
-import UsersMixin from './mixins/UsersMixin';
+import UserMixin from './mixins/UserMixin';
 export default {
     props: ['params'],
-    mixins: [UsersMixin], // Mixin
+    mixins: [UserMixin], // Mixin
     template: `<div>
         <div class="field">
             <label class="label">First Name</label>
@@ -64,7 +64,7 @@ export default {
     methods: {
         SignupUser() {
             const tUserData = {
-                Id: (this.GetLastUserId + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
+                Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
                 Email: this.Email,
                 Gender: this.Gender,
                 FirstName: this.FirstName,
@@ -72,7 +72,7 @@ export default {
                 Address: this.Address,
                 Password: this.Password
             };
-            this.AddUser(tUserData);
+            this.AddUser(this.Users, tUserData);
             this.ClearForm();
         },
         ClearForm() {

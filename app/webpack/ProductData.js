@@ -1,6 +1,5 @@
 // Alfanumeric ids to avoid the numeric string problem.
-export default {
-	Products: [{
+export default [{
 		Id: '1',
 		Title: 'BioMinF',
 		SubTitle: '',
@@ -24,5 +23,4 @@ export default {
 		Price: 50,
 		Description: '',
 		StockQuantity: 2
-	}]
-};
+}];
