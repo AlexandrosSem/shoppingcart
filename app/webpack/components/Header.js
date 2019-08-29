@@ -3,7 +3,7 @@ export default {
     data: function() {
         return {
             PageNow: this.value, // Make a "copy" of the parent variable
-            ProductsInfoOnCart: this.params.ProductsInfoOnCart
+            ProductsInfoOnCart: this.$store.getters.GetProductsInfoOnCart
         };
     },
     template: `<nav class="navbar is-light">
