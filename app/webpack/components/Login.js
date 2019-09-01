@@ -1,5 +1,4 @@
 export default {
-    props: ['params'],
     template: `<div>
         <div class="field">
             <label class="label">Email</label>
@@ -21,7 +20,7 @@ export default {
     </div>`,
     data () {
         return {
-            Users: this.params.Users,
+            Users: this.$store.getters.GetUsers,
             Email: '',
             Password: ''
         };

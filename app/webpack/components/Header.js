@@ -1,8 +1,7 @@
 export default {
-    props: ['value', 'params'], // value is set by v-model
     data: function() {
         return {
-            PageNow: this.value, // Make a "copy" of the parent variable
+            PageNow: this.$store.getters.GetPageDisplay,
             ProductsInfoOnCart: this.$store.getters.GetProductsInfoOnCart
         };
     },
@@ -40,12 +39,7 @@ export default {
     },
     methods: {
         SetPage: function(pPage) {
-            this.PageNow = pPage;
-        }
-    },
-    watch: {
-        PageNow: function() {
-            this.$emit('input', this.PageNow); // send an input event back
+            this.$store.dispatch('SetPageDisplay', pPage);
         }
     }
 };

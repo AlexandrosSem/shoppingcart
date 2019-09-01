@@ -25,9 +25,9 @@ export default {
         return {
             InputQuantity: 1,
             ProductInfo: this.params.ProductInfo,
-            Products: this.params.Products,
-            ProductsInfoOnCart: this.params.ProductsInfoOnCart,
-            ProductsIndex: this.params.ProductsIndex
+            Products: this.$store.getters.GetProducts,
+            ProductsInfoOnCart: this.$store.getters.GetProductsInfoOnCart,
+            ProductsIndex: this.$store.getters.GetProductsIndex
         }
     },
     methods: {

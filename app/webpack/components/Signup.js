@@ -1,6 +1,5 @@
 import UserMixin from '../mixins/UserMixin';
 export default {
-    props: ['params'],
     mixins: [UserMixin], // Mixin
     template: `<div>
         <div class="field">
@@ -52,7 +51,7 @@ export default {
     </div>`,
     data () {
         return {
-            Users: this.params.Users,
+            Users: this.$store.getters.GetUsers,
             FirstName: '',
             LastName: '',
             Address: '',

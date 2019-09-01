@@ -27,11 +27,17 @@ export default new Vuex.Store({
     mutations: {
         AddPropertyProductsIndex (pState, pPayload) {
             pState.ProductsIndex[pPayload.Property] = pPayload.Value;
+        },
+        SetPageDisplay (pState, pPayload) {
+            pState.PageDisplay = pPayload;
         }
     },
     actions: {
         AddPropertyProductsIndex (pContext, pPayload) {
             pContext.commit('AddPropertyProductsIndex', pPayload);
+        },
+        SetPageDisplay (pContext, pPayload) {
+            pContext.commit('SetPageDisplay', pPayload);
         }
     }
 });

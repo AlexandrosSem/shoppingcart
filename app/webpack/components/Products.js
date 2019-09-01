@@ -1,17 +1,16 @@
 import Product from './Product';
 export default {
-    props: ['params'],
     template: `<div>
         <div>
         <button class="button is-success" v-bind:disabled="CheckIfAnyProductStockLeft" v-on:click="AddAllProductsToCart()">Add all products to cart</button>
         </div>
-        <div is="Product" v-for="Product in Products" v-bind:params="{Products, ProductsInfoOnCart, ProductsIndex, Product}" v-bind:key="Product.Id"></div>
+        <div is="Product" v-for="Product in Products" v-bind:params="{Product}" v-bind:key="Product.Id"></div>
     </div>`,
     data () {
         return {
-            Products: this.params.Products,
-            ProductsInfoOnCart: this.params.ProductsInfoOnCart,
-            ProductsIndex: this.params.ProductsIndex
+            Products: this.$store.getters.GetProducts,
+			ProductsInfoOnCart: this.$store.getters.GetProductsInfoOnCart,
+			ProductsIndex: this.$store.getters.GetProductsIndex
         };
     },
     computed: {

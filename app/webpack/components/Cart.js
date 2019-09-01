@@ -1,6 +1,5 @@
 import ProductOnCart from './ProductOnCart';
 export default {
-    props: ['params'],
     template: `<div>
         <div v-if="ProductsInfoOnCart.length > 0">
             <div>
@@ -11,13 +10,13 @@ export default {
             <button class="button is-danger" v-on:click="EmptyTheCart()">Empty the cart</button>
             </div>
         </div>
-        <div is="ProductOnCart" v-for="ProductInfo in ProductsInfoOnCart" v-bind:params="{Products, ProductsInfoOnCart, ProductsIndex, ProductInfo}" v-bind:key="ProductInfo.Id"></div>
+        <div is="ProductOnCart" v-for="ProductInfo in ProductsInfoOnCart" v-bind:params="{ProductInfo}" v-bind:key="ProductInfo.Id"></div>
     </div>`,
     data () {
         return {
-            Products: this.params.Products,
-			ProductsInfoOnCart: this.params.ProductsInfoOnCart,
-			ProductsIndex: this.params.ProductsIndex
+            Products: this.$store.getters.GetProducts,
+			ProductsInfoOnCart: this.$store.getters.GetProductsInfoOnCart,
+			ProductsIndex: this.$store.getters.GetProductsIndex
         };
     },
     computed: {
