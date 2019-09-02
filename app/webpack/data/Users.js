@@ -6,7 +6,14 @@ export default [{
         FirstName: 'Boris',
         LastName: 'Fournier',
         Address: '8211 avenue debrousse',
-        Password: 'a'
+        Password: 'a',
+        ProductsOnCart: [{
+            Id: '1',
+            Quantity: 5
+        }, {
+            Id: '2',
+            Quantity: 2
+        }]
     }, {
         Id: '2',
         Email: 'b@gmail.com',
@@ -14,7 +21,14 @@ export default [{
         FirstName: 'Aaliyah',
         LastName: 'Jackson',
         Address: '4886 fitzherbert avenue',
-        Password: 'b'
+        Password: 'b',
+        ProductsOnCart: [{
+            Id: '1',
+            Quantity: 3
+        }, {
+            Id: '3',
+            Quantity: 2
+        }]
     }, {
         Id: '3',
         Email: 'c@gmail.com',
@@ -22,13 +36,12 @@ export default [{
         FirstName: 'Ernestine',
         LastName: 'Aschenbrenner',
         Address: 'kapellenweg 163',
-        Password: 'c'
-    }, {
-        Id: '4',
-        Email: 'd@gmail.com',
-        Gender: 'Female',
-        FirstName: 'Melanie',
-        LastName: 'Mönch',
-        Address: 'mühlenweg 23',
-        Password: 'd'
-}];
+        Password: 'c',
+        ProductsOnCart: [{
+            Id: '2',
+            Quantity: 4
+        }, {
+            Id: '3',
+            Quantity: 1
+        }]
+    }];

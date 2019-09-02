@@ -57,22 +57,28 @@ export default {
             Address: '',
             Email: '',
             Gender: 'male',
-            Password: ''
+            Password: '',
+            ProductsOnCart: []
         };
     },
     methods: {
         SignupUser() {
-            const tUserData = {
-                Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
-                Email: this.Email,
-                Gender: this.Gender,
-                FirstName: this.FirstName,
-                LastName: this.LastName,
-                Address: this.Address,
-                Password: this.Password
-            };
-            this.AddUser(this.Users, tUserData);
-            this.ClearForm();
+            if (this.IsFormFilledWithData()) {
+                const tUserData = {
+                    Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
+                    Email: this.Email,
+                    Gender: this.Gender,
+                    FirstName: this.FirstName,
+                    LastName: this.LastName,
+                    Address: this.Address,
+                    Password: this.Password,
+                    ProductsOnCart: this.ProductsOnCart
+                };
+                this.AddUser(this.Users, tUserData);
+                this.ClearForm();
+            } else {
+                alert('All form fields are required.');
+            }
         },
         ClearForm() {
             this.FirstName = '';
@@ -81,6 +87,23 @@ export default {
             this.Email = '';
             this.Gender = 'male';
             this.Password = '';
+        },
+        IsFormFilledWithData() {
+            let tResult = true;
+            if (!this.FirstName.trim()) {
+                tResult = false;
+            } else if (!this.LastName.trim()) {
+                tResult = false;
+            } else if (!this.Address.trim()) {
+                tResult = false;
+            } else  if (!this.Email.trim()) {
+                tResult = false;
+            } else if (!this.Gender.trim()) {
+                tResult = false;
+            } else if (!this.Password.trim()) {
+                tResult = false;
+            }
+            return tResult;
         }
     }
 };
