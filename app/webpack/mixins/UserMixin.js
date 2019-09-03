@@ -12,6 +12,12 @@ export default {
         },
         AddUser(pArrUsers, pObjData) {
             pArrUsers.push(pObjData);
+        },
+        CheckIfUserAlreadyExists(pArrUsers, pEmail) {
+            const tIndex = pArrUsers.findIndex(function(pEl) {
+                return pEl.Email === pEmail;
+            });         
+            return (tIndex > -1);
         }
     }
 };

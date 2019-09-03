@@ -64,18 +64,22 @@ export default {
     methods: {
         SignupUser() {
             if (this.IsFormFilledWithData()) {
-                const tUserData = {
-                    Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
-                    Email: this.Email,
-                    Gender: this.Gender,
-                    FirstName: this.FirstName,
-                    LastName: this.LastName,
-                    Address: this.Address,
-                    Password: this.Password,
-                    ProductsOnCart: this.ProductsOnCart
-                };
-                this.AddUser(this.Users, tUserData);
-                this.ClearForm();
+                if (!this.CheckIfUserAlreadyExists(this.Users, this.Email)) {
+                    const tUserData = {
+                        Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
+                        Email: this.Email,
+                        Gender: this.Gender,
+                        FirstName: this.FirstName,
+                        LastName: this.LastName,
+                        Address: this.Address,
+                        Password: this.Password,
+                        ProductsOnCart: this.ProductsOnCart
+                    };
+                    this.AddUser(this.Users, tUserData);
+                    this.ClearForm();
+                } else {
+                    alert('This email is already being used by another user.');
+                }
             } else {
                 alert('All form fields are required.');
             }
