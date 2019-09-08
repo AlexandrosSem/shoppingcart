@@ -1,5 +1,5 @@
-// Data
-import AppData from './data/AppData';
+import ProductsData from './data/Products';
+import UsersData from './data/Users';
 // Store
 import CentralState from './state/CentralState';
 // Components
@@ -13,7 +13,7 @@ window.VueInstance = new Vue({
 	el: '#rootContainer',
 	store: CentralState,
 	data: {
-		AppData
+		
 	},
 	computed: {
 
@@ -27,6 +27,26 @@ window.VueInstance = new Vue({
 					Value: pIndex
 				});
 			});
+		},
+		SaveTheDataToLocalForage() {
+			let tInitialData = {
+				Products: ProductsData,
+				Users: UsersData
+			};
+			return localforage.getItem('AppData').then(function(pAppData) {
+				if (!pAppData) {
+					localforage.setItem('AppData', tInitialData);
+				} else {
+					tInitialData = pAppData;
+				}
+				return tInitialData;
+			}).catch(function() {
+
+			});
+		},
+		PutInitialDataToCentralState(pAppData) {
+			this.$store.dispatch('SetInitialProducts', pAppData.Products);
+			this.$store.dispatch('SetInitialUsers', pAppData.Users);
 		}
 	},
 	components: {
@@ -37,6 +57,10 @@ window.VueInstance = new Vue({
 		Login
 	},
 	created() {
-		this.BuildProductsIndexes();
+		const that = this;
+		this.SaveTheDataToLocalForage().then(function(pAppData) {
+			that.PutInitialDataToCentralState(pAppData);
+			that.BuildProductsIndexes();
+		});
 	}
 });

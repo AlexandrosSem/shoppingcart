@@ -1,11 +1,10 @@
-import AppData from '../data/AppData';
 export default new Vuex.Store({
     state: {
         PageDisplay: 'Products',
         ProductsInfoOnCart: [],
         ProductsIndex: {},
-        Products: AppData.Products,
-        Users: AppData.Users
+        Products: [],
+        Users: []
     },
     getters: {
         GetPageDisplay(pState) {
@@ -30,6 +29,16 @@ export default new Vuex.Store({
         },
         SetPageDisplay (pState, pPayload) {
             pState.PageDisplay = pPayload;
+        },
+        SetInitialProducts(pState, pPayload) {
+            pPayload.forEach(function(pEl) {
+                pState.Products.push(pEl);
+            });
+        },
+        SetInitialUsers(pState, pPayload) {
+            pPayload.forEach(function(pEl) {
+                pState.Users.push(pEl);
+            });
         }
     },
     actions: {
@@ -38,6 +47,12 @@ export default new Vuex.Store({
         },
         SetPageDisplay (pContext, pPayload) {
             pContext.commit('SetPageDisplay', pPayload);
+        },
+        SetInitialProducts(pContext, pPayload) {
+            pContext.commit('SetInitialProducts', pPayload);
+        },
+        SetInitialUsers(pContext, pPayload) {
+            pContext.commit('SetInitialUsers', pPayload);
         }
     }
 });
