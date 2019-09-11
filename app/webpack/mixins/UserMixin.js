@@ -1,8 +1,8 @@
 export default {
     methods: {
-        GetLastUserId(pArrUsers) {
+        GetLastUserId() {
             let tMaxId = 0;
-            pArrUsers.forEach(function(pEl) {
+            this.$store.getters.GetUsers.forEach(function(pEl) {
                 const tCurrentId = +pEl.Id;
                 if (tCurrentId > tMaxId) {
                     tMaxId = tCurrentId;
@@ -10,14 +10,24 @@ export default {
             });
             return tMaxId;
         },
-        AddUser(pArrUsers, pObjData) {
-            pArrUsers.push(pObjData);
+        AddUser(pObjData) {
+            this.$store.dispatch('AddUser', pObjData);
+            this.AddUserToDatabse(pObjData);
         },
-        CheckIfUserAlreadyExists(pArrUsers, pEmail) {
-            const tIndex = pArrUsers.findIndex(function(pEl) {
+        CheckIfUserAlreadyExists(pEmail) {
+            const tIndex = this.$store.getters.GetUsers.findIndex(function(pEl) {
                 return pEl.Email === pEmail;
             });         
             return (tIndex > -1);
+        },
+        AddUserToDatabse(pObjData) {
+            return localforage.getItem('AppData').then(function(pAppData) {
+                pAppData.Users.push(pObjData);
+                return localforage.setItem('AppData', pAppData);
+              })
+              .then(function() {
+
+              });
         }
     }
 };

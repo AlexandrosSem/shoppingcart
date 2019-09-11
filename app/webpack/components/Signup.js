@@ -51,7 +51,6 @@ export default {
     </div>`,
     data () {
         return {
-            Users: this.$store.getters.GetUsers,
             FirstName: '',
             LastName: '',
             Address: '',
@@ -64,9 +63,9 @@ export default {
     methods: {
         SignupUser() {
             if (this.IsFormFilledWithData()) {
-                if (!this.CheckIfUserAlreadyExists(this.Users, this.Email)) {
+                if (!this.CheckIfUserAlreadyExists(this.Email)) {
                     const tUserData = {
-                        Id: (this.GetLastUserId(this.Users) + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
+                        Id: (this.GetLastUserId() + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
                         Email: this.Email,
                         Gender: this.Gender,
                         FirstName: this.FirstName,
@@ -75,7 +74,7 @@ export default {
                         Password: this.Password,
                         ProductsOnCart: this.ProductsOnCart
                     };
-                    this.AddUser(this.Users, tUserData);
+                    this.AddUser(tUserData);
                     this.ClearForm();
                 } else {
                     alert('This email is already being used by another user.');

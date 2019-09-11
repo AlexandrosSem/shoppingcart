@@ -39,6 +39,9 @@ export default new Vuex.Store({
             pPayload.forEach(function(pEl) {
                 pState.Users.push(pEl);
             });
+        },
+        AddUser(pState, pPayload) {
+            pState.Users.push(pPayload);
         }
     },
     actions: {
@@ -53,6 +56,9 @@ export default new Vuex.Store({
         },
         SetInitialUsers(pContext, pPayload) {
             pContext.commit('SetInitialUsers', pPayload);
+        },
+        AddUser(pContext, pPayload) {
+            pContext.commit('AddUser', pPayload);
         }
     }
 });
