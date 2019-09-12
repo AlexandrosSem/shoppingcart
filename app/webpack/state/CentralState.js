@@ -42,6 +42,9 @@ export default new Vuex.Store({
         },
         AddUser(pState, pPayload) {
             pState.Users.push(pPayload);
+        },
+        AddProduct(pState, pPayload) {
+            pState.Products.push(pPayload);
         }
     },
     actions: {
@@ -59,6 +62,9 @@ export default new Vuex.Store({
         },
         AddUser(pContext, pPayload) {
             pContext.commit('AddUser', pPayload);
+        },
+        AddProduct(pContext, pPayload) {
+            pContext.commit('AddProduct', pPayload);
         }
     }
 });
