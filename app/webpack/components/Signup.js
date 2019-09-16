@@ -37,8 +37,19 @@ export default {
             <div class="control">
                 <div class="select">
                     <select v-model="Gender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field">
+            <label class="label">Type</label>
+            <div class="control">
+                <div class="select">
+                    <select v-model="Type">
+                        <option value="Buyer">Buyer</option>
+                        <option value="Seller">Seller</option>
                     </select>
                 </div>
             </div>
@@ -55,9 +66,11 @@ export default {
             LastName: '',
             Address: '',
             Email: '',
-            Gender: 'male',
+            Gender: 'Male',
+            Type: 'Buyer',
             Password: '',
-            ProductsOnCart: []
+            ProductsOnCart: [],
+            MyProducts: []
         };
     },
     methods: {
@@ -68,11 +81,13 @@ export default {
                         Id: (this.GetLastUserId() + 1).toString(), // Its coming from the computed property that merged to this compoment from the mixin
                         Email: this.Email,
                         Gender: this.Gender,
+                        Type: this.Type,
                         FirstName: this.FirstName,
                         LastName: this.LastName,
                         Address: this.Address,
                         Password: this.Password,
-                        ProductsOnCart: this.ProductsOnCart
+                        ProductsOnCart: this.ProductsOnCart,
+                        MyProducts: this.MyProducts
                     };
                     this.AddUser(tUserData);
                     this.ClearForm();
@@ -88,7 +103,8 @@ export default {
             this.LastName = '';
             this.Address = '';
             this.Email = '';
-            this.Gender = 'male';
+            this.Gender = 'Male';
+            this.Type = 'Buyer';
             this.Password = '';
         },
         IsFormFilledWithData() {
@@ -102,6 +118,8 @@ export default {
             } else  if (!this.Email.trim()) {
                 tResult = false;
             } else if (!this.Gender.trim()) {
+                tResult = false;
+            } else if (!this.Type.trim()) {
                 tResult = false;
             } else if (!this.Password.trim()) {
                 tResult = false;
