@@ -1,4 +1,6 @@
+import UserMixin from '../mixins/UserMixin';
 export default {
+    mixins: [UserMixin], // Mixin
     template: `<div>
         <div class="field">
             <label class="label">Email</label>
@@ -27,6 +29,16 @@ export default {
     },
     methods: {
         LoginUser() {
+            if (this.ValidateUser(this.Email, this.Password)) {
+                this.ClearForm();
+            } else {
+                alert('Wrong credentials. Try again!');
+            }
+        },
+        ValidateUser(pEmail, pPassword) {
+            return this.ValidateUserCredentials(pEmail, pPassword);
+        },
+        ClearForm() {
             this.Email = '';
             this.Password = '';
         }
