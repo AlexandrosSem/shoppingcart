@@ -1,10 +1,11 @@
 export default new Vuex.Store({
     state: {
-        PageDisplay: 'Products',
+        PageDisplay: 'Login',
         ProductsInfoOnCart: [],
         ProductsIndex: {},
         Products: [],
-        Users: []
+        Users: [],
+        LoginDetails: null
     },
     getters: {
         GetPageDisplay(pState) {
@@ -21,6 +22,9 @@ export default new Vuex.Store({
         },
         GetUsers(pState) {
             return pState.Users;
+        },
+        GetUserLoginDetails(pState) {
+            return pState.LoginDetails;
         }
     },
     mutations: {
@@ -45,6 +49,12 @@ export default new Vuex.Store({
         },
         AddProduct(pState, pPayload) {
             pState.Products.push(pPayload);
+        },
+        SetUserLoginDetails(pState, pPayload) {
+            pState.LoginDetails = Object.assign({}, pState.LoginDetails, pPayload);
+        },
+        DeleteUserLoginDetails(pState) {
+            Vue.delete(pState, 'LoginDetails');
         }
     },
     actions: {
@@ -65,6 +75,12 @@ export default new Vuex.Store({
         },
         AddProduct(pContext, pPayload) {
             pContext.commit('AddProduct', pPayload);
+        },
+        SetUserLoginDetails(pContext, pPayload) {
+            pContext.commit('SetUserLoginDetails', pPayload);
+        },
+        DeleteUserLoginDetails(pContext) {
+            pContext.commit('DeleteUserLoginDetails');
         }
     }
 });

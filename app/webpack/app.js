@@ -12,12 +12,8 @@ import Login from './components/Login';
 window.VueInstance = new Vue({
 	el: '#rootContainer',
 	store: CentralState,
-	data: {
-		
-	},
-	computed: {
-
-	},
+	data: {},
+	computed: {},
 	methods: {
 		BuildProductsIndexes() {
 			const that = this;
@@ -31,7 +27,8 @@ window.VueInstance = new Vue({
 		SaveTheDataToLocalForage() {
 			let tInitialData = {
 				Products: ProductsData,
-				Users: UsersData
+				Users: UsersData,
+				LoginDetails: null
 			};
 			return localforage.getItem('AppData').then(function(pAppData) {
 				if (!pAppData) {
@@ -47,6 +44,7 @@ window.VueInstance = new Vue({
 		PutInitialDataToCentralState(pAppData) {
 			this.$store.dispatch('SetInitialProducts', pAppData.Products);
 			this.$store.dispatch('SetInitialUsers', pAppData.Users);
+			this.$store.dispatch('SetUserLoginDetails', pAppData.LoginDetails);
 		}
 	},
 	components: {
@@ -61,6 +59,10 @@ window.VueInstance = new Vue({
 		this.SaveTheDataToLocalForage().then(function(pAppData) {
 			that.PutInitialDataToCentralState(pAppData);
 			that.BuildProductsIndexes();
+			if ((that.$store.getters.GetUserLoginDetails) 
+			&& (that.$store.getters.GetUserLoginDetails.UserId)) {
+				that.$store.dispatch('SetPageDisplay', 'Products');
+			}
 		});
 	}
 });

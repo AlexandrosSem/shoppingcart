@@ -11,7 +11,7 @@ export default {
         <div class="field">
             <label class="label">Password</label>
             <div class="control">
-                <input class="input" type="text" v-model="Password" placeholder="Password">
+                <input class="input" type="password" v-model="Password" placeholder="Password">
             </div>
         </div>
         <div class="field is-grouped">
@@ -30,7 +30,12 @@ export default {
     methods: {
         LoginUser() {
             if (this.ValidateUser(this.Email, this.Password)) {
-                this.ClearForm();
+                const that = this;
+                const tUserId = this.GetUserIdByEmail(this.Email);
+                this.SaveLoginDetails(tUserId).then(function() {
+                    that.ClearForm();
+                    that.$store.dispatch('SetPageDisplay', 'Products');
+                });
             } else {
                 alert('Wrong credentials. Try again!');
             }
