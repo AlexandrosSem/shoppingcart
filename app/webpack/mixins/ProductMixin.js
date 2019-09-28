@@ -1,16 +1,15 @@
 export default {
     methods: {
         AddProduct(pObjData) {
-            this.$store.dispatch('AddProduct', pObjData);
-            this.AddProductToDatabse(pObjData);
+            const that = this;
+            this.AddProductToDatabse(pObjData).then(function() {
+                that.$store.dispatch('AddProduct', pObjData);
+            });
         },
         AddProductToDatabse(pObjData) {
             return localforage.getItem('AppData').then(function(pAppData) {
                 pAppData.Products.push(pObjData);
                 return localforage.setItem('AppData', pAppData);
-              })
-              .then(function() {
-
               });
         }
     }

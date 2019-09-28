@@ -31,7 +31,7 @@ export default {
         LoginUser() {
             if (this.ValidateUser(this.Email, this.Password)) {
                 const that = this;
-                const tUserId = this.GetUserIdByEmail(this.Email);
+                const tUserId = this.GetUserIdByEmail(this.Email).toString();
                 this.SaveLoginDetails(tUserId).then(function() {
                     that.ClearForm();
                     that.$store.dispatch('SetPageDisplay', 'Products');

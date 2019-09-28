@@ -29,7 +29,9 @@ export default new Vuex.Store({
     },
     mutations: {
         AddPropertyProductsIndex (pState, pPayload) {
-            pState.ProductsIndex[pPayload.Property] = pPayload.Value;
+            pState.ProductsIndex = Object.assign({}, pState.ProductsIndex, {
+                [pPayload.Property]: pPayload.Value
+            });
         },
         SetPageDisplay (pState, pPayload) {
             pState.PageDisplay = pPayload;

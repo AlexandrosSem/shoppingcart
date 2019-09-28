@@ -16,7 +16,7 @@ export default {
                 return pEl.Email === pEmail;
             });
             if (tEl) {
-                tUserId = tEl.Id;
+                tUserId = +tEl.Id;
             }         
             return tUserId;
         },

@@ -15,15 +15,6 @@ window.VueInstance = new Vue({
 	data: {},
 	computed: {},
 	methods: {
-		BuildProductsIndexes() {
-			const that = this;
-			this.$store.getters.GetProducts.forEach(function(pEl, pIndex) {
-				that.$store.dispatch('AddPropertyProductsIndex', {
-					Property: pEl.Id,
-					Value: pIndex
-				});
-			});
-		},
 		SaveTheDataToLocalForage() {
 			let tInitialData = {
 				Products: ProductsData,
@@ -58,7 +49,6 @@ window.VueInstance = new Vue({
 		const that = this;
 		this.SaveTheDataToLocalForage().then(function(pAppData) {
 			that.PutInitialDataToCentralState(pAppData);
-			that.BuildProductsIndexes();
 			if ((that.$store.getters.GetUserLoginDetails) 
 			&& (that.$store.getters.GetUserLoginDetails.UserId)) {
 				that.$store.dispatch('SetPageDisplay', 'Products');

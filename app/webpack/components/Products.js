@@ -52,7 +52,19 @@ export default {
                 }
                 pEl.StockQuantity = 0;
             });
-        }
+        },
+        BuildProductsIndexes() {
+			const that = this;
+			this.$store.getters.GetProducts.forEach(function(pEl, pIndex) {
+				that.$store.dispatch('AddPropertyProductsIndex', {
+					Property: pEl.Id,
+					Value: pIndex
+				});
+			});
+		}
+    },
+    created() {
+        this.BuildProductsIndexes();
     },
     components: {
         Product
