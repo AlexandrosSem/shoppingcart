@@ -5,7 +5,7 @@ export default new Vuex.Store({
         ProductsIndex: {},
         Products: [],
         Users: [],
-        LoginDetails: null
+        LoginDetails: undefined
     },
     getters: {
         GetPageDisplay(pState) {
@@ -57,6 +57,15 @@ export default new Vuex.Store({
         },
         DeleteUserLoginDetails(pState) {
             Vue.delete(pState, 'LoginDetails');
+        },
+        AddCartProductUser(pState, pPayload) {
+            const tUserIndex = pPayload.User.Index;
+            const tProductOnCartIndex = pPayload.User.ProductOnCartIndex;
+            if (tProductOnCartIndex > -1) {
+                pState.Users[tUserIndex].ProductsOnCart[tProductOnCartIndex] = Object.assign({}, pState.Users[tUserIndex].ProductsOnCart[tProductOnCartIndex], pPayload.Product);
+            } else {
+                pState.Users[tUserIndex].ProductsOnCart.push(pPayload.Product);
+            }
         }
     },
     actions: {
@@ -83,6 +92,9 @@ export default new Vuex.Store({
         },
         DeleteUserLoginDetails(pContext) {
             pContext.commit('DeleteUserLoginDetails');
+        },
+        AddCartProductUser(pContext, pPayload) {
+            pContext.commit('AddCartProductUser', pPayload);
         }
     }
 });

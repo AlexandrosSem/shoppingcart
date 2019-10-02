@@ -1,4 +1,7 @@
+import UserMixin from '../mixins/UserMixin';
+import ProductMixin from '../mixins/ProductMixin';
 export default {
+    mixins: [UserMixin, ProductMixin], // Mixins
     props: ['params'],
     template: `<div class="box">
         <div class="media">
@@ -37,11 +40,18 @@ export default {
             const tProductsIndex = this.ProductsIndex;
             let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
             tCurrentProduct.StockQuantity -= pQuantity;
+            const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
+            const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
+            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserId, pProductId);
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
+            const tObjProductOnCartUser = {
+                Id: pProductId
+            };
             if (tTargetIndex > -1) {
                 tProductsInfoOnCart[tTargetIndex].QuantityOnCart += pQuantity;
+                tObjProductOnCartUser.Quantity = tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
             } else {
                 const tObjProductOnCart = {
                     Id: tCurrentProduct.Id,
@@ -54,18 +64,27 @@ export default {
                     QuantityOnCart: pQuantity
                 };
                 tProductsInfoOnCart.push(tObjProductOnCart);
+                tObjProductOnCartUser.Quantity = tObjProductOnCart.QuantityOnCart;
             }
+            this.AddCartProductUser(tCurrentUserIndex, tProductOnCartIndex, tObjProductOnCartUser);
         },
         AddAllToCart(pProductId) {
             let tProducts = this.Products;
             let tProductsInfoOnCart = this.ProductsInfoOnCart;
             const tProductsIndex = this.ProductsIndex;
             let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
+            const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
+            const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
+            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserId, pProductId);
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
+            const tObjProductOnCartUser = {
+                Id: pProductId
+            };
             if (tTargetIndex > -1) {
                 tProductsInfoOnCart[tTargetIndex].QuantityOnCart += tCurrentProduct.StockQuantity;
+                tObjProductOnCartUser.Quantity = tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
             } else {               
                 const tObjProductOnCart = {
                     Id: tCurrentProduct.Id,
@@ -78,8 +97,10 @@ export default {
                     QuantityOnCart: tCurrentProduct.StockQuantity
                 };
                 tProductsInfoOnCart.push(tObjProductOnCart);
+                tObjProductOnCartUser.Quantity = tObjProductOnCart.QuantityOnCart;
             }
             tCurrentProduct.StockQuantity = 0;
+            this.AddCartProductUser(tCurrentUserIndex, tProductOnCartIndex, tObjProductOnCartUser);
         }
     }
 };

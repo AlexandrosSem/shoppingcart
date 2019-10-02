@@ -20,6 +20,16 @@ export default {
             }         
             return tUserId;
         },
+        GetCurrentUserIndex(pCurrentUserId) {
+            return this.$store.getters.GetUsers.findIndex(function(pEl) {
+                return pEl.Id === pCurrentUserId;
+            });
+        },
+        GetProductOnCartIndex(pCurrentUserId, pProductId) {
+            return this.$store.getters.GetUsers[pCurrentUserId].ProductsOnCart.findIndex(function(pEl) {
+                return pEl.Id === pProductId;
+            });
+        },
         AddUser(pObjData) {
             const that = this;
             return this.AddUserToDatabse(pObjData).then(function() {

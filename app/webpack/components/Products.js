@@ -1,5 +1,8 @@
+import UserMixin from '../mixins/UserMixin';
+import ProductMixin from '../mixins/ProductMixin';
 import Product from './Product';
 export default {
+    mixins: [UserMixin, ProductMixin], // Mixins
     template: `<div>
         <div>
         <button class="button is-success" v-bind:disabled="CheckIfAnyProductStockLeft" v-on:click="AddAllProductsToCart()">Add all products to cart</button>
@@ -28,30 +31,42 @@ export default {
     },
     methods: {
         AddAllProductsToCart() {
-            let tProducts = this.Products;
-            let tProductsInfoOnCart = this.ProductsInfoOnCart;
-            tProducts.forEach(function(pEl) {
-                const tCurrentId = pEl.Id;
-                const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
-                    return tCurrentId === pEl.Id;
-                });
-                if (tTargetIndex > -1) {
-                    tProductsInfoOnCart[tTargetIndex].QuantityOnCart += pEl.StockQuantity;
-                } else {               
-                    const tObjProductOnCart = {
-                        Id: pEl.Id,
-                        Title: pEl.Title,
-                        SubTitle: pEl.SubTitle,
-                        ImageURL: pEl.ImageURL,
-                        Price: pEl.Price,
-                        Description: pEl.Description,
-                        StockQuantity: 0,
-                        QuantityOnCart: pEl.StockQuantity
+            const that = this;
+            (async function() {
+                let tProducts = that.Products;
+                let tProductsInfoOnCart = that.ProductsInfoOnCart;
+                const tCurrentUserId = that.$store.getters.GetUserLoginDetails.UserId;
+                const tCurrentUserIndex = that.GetCurrentUserIndex(tCurrentUserId);
+                for (let i = 0, l = tProducts.length; i < l; i++) {
+                    const tCurrentId = tProducts[i].Id;
+                    const tProductOnCartIndex = that.GetProductOnCartIndex(tCurrentUserId, tCurrentId);
+                    const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
+                        return tCurrentId === pEl.Id;
+                    });
+                    const tObjProductOnCartUser = {
+                        Id: tCurrentId
                     };
-                    tProductsInfoOnCart.push(tObjProductOnCart);
+                    if (tTargetIndex > -1) {
+                        tProductsInfoOnCart[tTargetIndex].QuantityOnCart += tProducts[i].StockQuantity;
+                        tObjProductOnCartUser.Quantity = tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
+                    } else {               
+                        const tObjProductOnCart = {
+                            Id: tProducts[i].Id,
+                            Title: tProducts[i].Title,
+                            SubTitle: tProducts[i].SubTitle,
+                            ImageURL: tProducts[i].ImageURL,
+                            Price: tProducts[i].Price,
+                            Description: tProducts[i].Description,
+                            StockQuantity: 0,
+                            QuantityOnCart: tProducts[i].StockQuantity
+                        };
+                        tProductsInfoOnCart.push(tObjProductOnCart);
+                        tObjProductOnCartUser.Quantity = tObjProductOnCart.QuantityOnCart;
+                    }
+                    tProducts[i].StockQuantity = 0;
+                    await that.AddCartProductUser(tCurrentUserIndex, tProductOnCartIndex, tObjProductOnCartUser);
                 }
-                pEl.StockQuantity = 0;
-            });
+            }());
         },
         BuildProductsIndexes() {
 			const that = this;

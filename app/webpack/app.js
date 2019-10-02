@@ -18,8 +18,7 @@ window.VueInstance = new Vue({
 		SaveTheDataToLocalForage() {
 			let tInitialData = {
 				Products: ProductsData,
-				Users: UsersData,
-				LoginDetails: null
+				Users: UsersData
 			};
 			return localforage.getItem('AppData').then(function(pAppData) {
 				if (!pAppData) {

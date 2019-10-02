@@ -8,30 +8,18 @@ export default [{
         LastName: 'Fournier',
         Address: '8211 avenue debrousse',
         Password: 'a',
-        ProductsOnCart: [{
-            Id: '1',
-            Quantity: 5
-        }, {
-            Id: '2',
-            Quantity: 2
-        }],
+        ProductsOnCart: [],
         MyProducts: []
     }, {
         Id: '2',
-        Type: 'Seller',
+        Type: 'Buyer',
         Email: 'b@gmail.com',
         Gender: 'Male',
         FirstName: 'Aaliyah',
         LastName: 'Jackson',
         Address: '4886 fitzherbert avenue',
         Password: 'b',
-        ProductsOnCart: [{
-            Id: '1',
-            Quantity: 3
-        }, {
-            Id: '3',
-            Quantity: 2
-        }],
+        ProductsOnCart: [],
         MyProducts: []
     }, {
         Id: '3',
@@ -42,12 +30,23 @@ export default [{
         LastName: 'Aschenbrenner',
         Address: 'kapellenweg 163',
         Password: 'c',
-        ProductsOnCart: [{
-            Id: '2',
-            Quantity: 4
+        ProductsOnCart: [],
+        MyProducts: [{
+            Id: '1'
         }, {
-            Id: '3',
-            Quantity: 1
-        }],
-        MyProducts: []
+            Id: '2'
+        }]
+    }, {
+        Id: '4',
+        Type: 'Seller',
+        Email: 'd@gmail.com',
+        Gender: 'Male',
+        FirstName: 'Ernestine',
+        LastName: 'Aschenbrenner',
+        Address: 'kapellenweg 163',
+        Password: 'd',
+        ProductsOnCart: [],
+        MyProducts: [{
+            Id: '3'
+        }]
     }];
