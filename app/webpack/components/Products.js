@@ -39,7 +39,7 @@ export default {
                 const tCurrentUserIndex = that.GetCurrentUserIndex(tCurrentUserId);
                 for (let i = 0, l = tProducts.length; i < l; i++) {
                     const tCurrentId = tProducts[i].Id;
-                    const tProductOnCartIndex = that.GetProductOnCartIndex(tCurrentUserId, tCurrentId);
+                    const tProductOnCartIndex = that.GetProductOnCartIndex(tCurrentUserIndex, tCurrentId);
                     const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                         return tCurrentId === pEl.Id;
                     });

@@ -25,8 +25,8 @@ export default {
                 return pEl.Id === pCurrentUserId;
             });
         },
-        GetProductOnCartIndex(pCurrentUserId, pProductId) {
-            return this.$store.getters.GetUsers[pCurrentUserId].ProductsOnCart.findIndex(function(pEl) {
+        GetProductOnCartIndex(pCurrentUserIndex, pProductId) {
+            return this.$store.getters.GetUsers[pCurrentUserIndex].ProductsOnCart.findIndex(function(pEl) {
                 return pEl.Id === pProductId;
             });
         },
@@ -68,6 +68,15 @@ export default {
                 delete pAppData.LoginDetails;
                 return localforage.setItem('AppData', pAppData);
             });
+        },
+        DeleteAllData() {
+            const that = this;
+            return this.DeleteAllDataFromDatabase().then(function() {
+                that.$store.dispatch('DeleteAllData');
+            });
+        },
+        DeleteAllDataFromDatabase() {
+            return localforage.clear();
         },
         CheckIfUserAlreadyExists(pEmail) {
             const tIndex = this.$store.getters.GetUsers.findIndex(function(pEl) {

@@ -24,6 +24,7 @@ export default {
         <a v-if="!CheckLoginDetails" class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Login') }" href="#" v-on:click="SetPage('Login')">Login</a>
         <a class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Signup') }" href="#" v-on:click="SetPage('Signup')">Signup</a>
         <a v-if="CheckLoginDetails" class="navbar-item" href="#" v-on:click="LogOut('Login')">Logout</a>
+        <a class="navbar-item" href="#" v-on:click="DeleteDatabase('Login')">Delete Database</a>
     </nav>`,
     computed: {
         TotalProductsOnCart() {
@@ -51,6 +52,12 @@ export default {
         LogOut(pPage) {
             const that = this;
             this.DeleteLoginDetails().then(function() {
+                that.SetPage(pPage);
+            });
+        },
+        DeleteDatabase(pPage) {
+            const that = this;
+            this.DeleteAllData().then(function() {
                 that.SetPage(pPage);
             });
         }

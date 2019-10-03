@@ -66,6 +66,32 @@ export default new Vuex.Store({
             } else {
                 pState.Users[tUserIndex].ProductsOnCart.push(pPayload.Product);
             }
+        },
+        DeleteAllData(pState) {
+            this.commit('ResetPageDisplay');
+            this.commit('ResetProductsInfoOnCart');
+            this.commit('ResetProductsIndex');
+            this.commit('ResetProducts');
+            this.commit('ResetUsers');
+            this.commit('DeleteUserLoginDetails');
+        },
+        ResetPageDisplay(pState) {
+            pState.PageDisplay = 'Login';
+        },
+        ResetProductsInfoOnCart(pState) {
+            pState.ProductsInfoOnCart.length = 0;
+        },
+        ResetProductsIndex(pState) {
+            const tProductsIndex = pState.ProductsIndex;
+            Object.keys(tProductsIndex).forEach(function(pEl) {
+                Vue.delete(tProductsIndex, pEl);
+            });
+        },
+        ResetProducts(pState) {
+            pState.Products.length = 0;
+        },
+        ResetUsers(pState) {
+            pState.Users.length = 0;
         }
     },
     actions: {
@@ -95,6 +121,9 @@ export default new Vuex.Store({
         },
         AddCartProductUser(pContext, pPayload) {
             pContext.commit('AddCartProductUser', pPayload);
+        },
+        DeleteAllData(pContext) {
+            pContext.commit('DeleteAllData');
         }
     }
 });

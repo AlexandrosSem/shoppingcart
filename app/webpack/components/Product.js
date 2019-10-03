@@ -42,7 +42,7 @@ export default {
             tCurrentProduct.StockQuantity -= pQuantity;
             const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
             const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
-            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserId, pProductId);
+            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserIndex, pProductId);
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
@@ -75,7 +75,7 @@ export default {
             let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
             const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
             const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
-            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserId, pProductId);
+            const tProductOnCartIndex = this.GetProductOnCartIndex(tCurrentUserIndex, pProductId);
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
