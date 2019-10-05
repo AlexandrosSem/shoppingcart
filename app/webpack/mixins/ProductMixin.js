@@ -2,11 +2,11 @@ export default {
     methods: {
         AddProduct(pObjData) {
             const that = this;
-            return this.AddProductToDatabse(pObjData).then(function() {
+            return this.AddProductToDatabase(pObjData).then(function() {
                 that.$store.dispatch('AddProduct', pObjData);
             });
         },
-        AddProductToDatabse(pObjData) {
+        AddProductToDatabase(pObjData) {
             return localforage.getItem('AppData').then(function(pAppData) {
                 pAppData.Products.push(pObjData);
                 return localforage.setItem('AppData', pAppData);
@@ -14,7 +14,7 @@ export default {
         },
         AddCartProductUser(pUserIndex, pProductIndex, pObjData) {
             const that = this;
-            return this.AddCartProductUserToDatabse(pUserIndex, pProductIndex, pObjData).then(function() {
+            return this.AddCartProductUserToDatabase(pUserIndex, pProductIndex, pObjData).then(function() {
                 const tObjFinal = {
                     User: {
                         Index: pUserIndex,
@@ -25,12 +25,33 @@ export default {
                 that.$store.dispatch('AddCartProductUser', tObjFinal);
             });
         },
-        AddCartProductUserToDatabse(pUserIndex, pProductIndex, pObjData) {
+        AddCartProductUserToDatabase(pUserIndex, pProductIndex, pObjData) {
             return localforage.getItem('AppData').then(function(pAppData) {
                 if (pProductIndex > -1) {
                     pAppData.Users[pUserIndex].ProductsOnCart[pProductIndex] = pObjData;
                 } else {
                     pAppData.Users[pUserIndex].ProductsOnCart.push(pObjData);
+                }
+                return localforage.setItem('AppData', pAppData);
+              });
+        },
+        RemoveCartProductUser(pObjData) {
+            const that = this;
+            return this.RemoveCartProductUserFromDatabase(pObjData).then(function() {
+                that.$store.dispatch('RemoveCartProductUser', pObjData);
+            });
+        },
+        RemoveCartProductUserFromDatabase(pObjData) {
+            return localforage.getItem('AppData').then(function(pAppData) {
+                const tProductsOnCart = pAppData.Users[pObjData.UserIndex].ProductsOnCart;
+                const tIndex = tProductsOnCart.findIndex(function(pEl) {
+                    return pEl.Id === pObjData.Id;
+                });
+                if (tIndex > -1) {
+                    tProductsOnCart[tIndex].Quantity -= pObjData.Quantity;
+                    if (tProductsOnCart[tIndex].Quantity === 0) {
+                        tProductsOnCart.splice(tIndex, 1);
+                    }
                 }
                 return localforage.setItem('AppData', pAppData);
               });

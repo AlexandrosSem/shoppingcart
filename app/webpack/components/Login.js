@@ -16,7 +16,8 @@ export default {
         </div>
         <div class="field is-grouped">
             <div class="control">
-                <button class="button is-link" v-on:click="LoginUser()">Login</button>
+                <button class="button is-link" v-on:click="LoginUser(Email, Password)">Login</button>
+                <button class="button is-link" v-on:click="LoginUser('a@gmail.com', 'a')">Login As User A</button>
             </div>
         </div>
     </div>`,
@@ -28,10 +29,10 @@ export default {
         };
     },
     methods: {
-        LoginUser() {
-            if (this.ValidateUser(this.Email, this.Password)) {
+        LoginUser(pEmail, pPassword) {
+            if (this.ValidateUser(pEmail, pPassword)) {
                 const that = this;
-                const tUserId = this.GetUserIdByEmail(this.Email).toString();
+                const tUserId = this.GetUserIdByEmail(pEmail).toString();
                 this.SaveLoginDetails(tUserId).then(function() {
                     that.ClearForm();
                     that.$store.dispatch('SetPageDisplay', 'Products');

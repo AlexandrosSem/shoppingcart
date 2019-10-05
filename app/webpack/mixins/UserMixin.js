@@ -32,11 +32,11 @@ export default {
         },
         AddUser(pObjData) {
             const that = this;
-            return this.AddUserToDatabse(pObjData).then(function() {
+            return this.AddUserToDatabase(pObjData).then(function() {
                 that.$store.dispatch('AddUser', pObjData);
             });
         },
-        AddUserToDatabse(pObjData) {
+        AddUserToDatabase(pObjData) {
             return localforage.getItem('AppData').then(function(pAppData) {
                 pAppData.Users.push(pObjData);
                 return localforage.setItem('AppData', pAppData);
@@ -47,11 +47,11 @@ export default {
             const tLoginDetails = {
                 UserId: pId
             };
-            return this.SaveLoginDetailsToDatabse(tLoginDetails).then(function() {
+            return this.SaveLoginDetailsToDatabase(tLoginDetails).then(function() {
                 that.$store.dispatch('SetUserLoginDetails', tLoginDetails);
             });
         },
-        SaveLoginDetailsToDatabse(pObj) {
+        SaveLoginDetailsToDatabase(pObj) {
             return localforage.getItem('AppData').then(function(pAppData) {
                 pAppData.LoginDetails = pObj;
                 return localforage.setItem('AppData', pAppData);

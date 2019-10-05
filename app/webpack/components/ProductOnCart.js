@@ -1,4 +1,7 @@
+import UserMixin from '../mixins/UserMixin';
+import ProductMixin from '../mixins/ProductMixin';
 export default {
+    mixins: [UserMixin, ProductMixin], // Mixins
     props: ['params'],
     template: `<div class="box">
         <div class="media">
@@ -37,6 +40,8 @@ export default {
             const tProductsIndex = this.ProductsIndex;
             let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
             tCurrentProduct.StockQuantity += pQuantity;
+            const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
+            const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
@@ -45,6 +50,11 @@ export default {
                 if (tProductsInfoOnCart[tTargetIndex].QuantityOnCart === 0) {
                     tProductsInfoOnCart.splice(tTargetIndex, 1);
                 }
+                this.RemoveCartProductUser({
+                    UserIndex: tCurrentUserIndex,
+                    Id: pProductId,
+                    Quantity: pQuantity
+                });
             } else {
                 alert(`Product with ID = '${pProductId}' not found!`);
             }
@@ -53,7 +63,9 @@ export default {
             let tProducts = this.Products;
             let tProductsInfoOnCart = this.ProductsInfoOnCart;
             const tProductsIndex = this.ProductsIndex;
-            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];        
+            let tCurrentProduct = tProducts[tProductsIndex[pProductId]];
+            const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
+            const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);        
             const tTargetIndex = tProductsInfoOnCart.findIndex(function(pEl) {
                 return pProductId === pEl.Id;
             });
@@ -61,6 +73,11 @@ export default {
                 tCurrentProduct.StockQuantity += tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
                 tProductsInfoOnCart[tTargetIndex].QuantityOnCart = 0;
                 tProductsInfoOnCart.splice(tTargetIndex, 1);
+                this.RemoveCartProductUser({
+                    UserIndex: tCurrentUserIndex,
+                    Id: pProductId,
+                    Quantity: tProductsInfoOnCart[tTargetIndex].QuantityOnCart
+                });
             } else {
                 alert(`Product with ID = '${pProductId}' not found!`);
             }

@@ -5,7 +5,7 @@ export default new Vuex.Store({
         ProductsIndex: {},
         Products: [],
         Users: [],
-        LoginDetails: undefined
+        LoginDetails: {}
     },
     getters: {
         GetPageDisplay(pState) {
@@ -56,7 +56,10 @@ export default new Vuex.Store({
             pState.LoginDetails = Object.assign({}, pState.LoginDetails, pPayload);
         },
         DeleteUserLoginDetails(pState) {
-            Vue.delete(pState, 'LoginDetails');
+            const tLoginDetails = pState.LoginDetails;
+            Object.keys(tLoginDetails).forEach(function(pEl) {
+                Vue.delete(tLoginDetails, pEl);
+            });
         },
         AddCartProductUser(pState, pPayload) {
             const tUserIndex = pPayload.User.Index;
@@ -74,6 +77,18 @@ export default new Vuex.Store({
             this.commit('ResetProducts');
             this.commit('ResetUsers');
             this.commit('DeleteUserLoginDetails');
+        },
+        RemoveCartProductUser(pState, pPayload) {
+            const tProductsOnCart = pState.Users[pPayload.UserIndex].ProductsOnCart;
+                const tIndex = tProductsOnCart.findIndex(function(pEl) {
+                    return pEl.Id === pPayload.Id;
+                });
+                if (tIndex > -1) {
+                    tProductsOnCart[tIndex].Quantity -= pPayload.Quantity;
+                    if (tProductsOnCart[tIndex].Quantity === 0) {
+                        tProductsOnCart.splice(tIndex, 1);
+                    }
+                }
         },
         ResetPageDisplay(pState) {
             pState.PageDisplay = 'Login';
@@ -124,6 +139,9 @@ export default new Vuex.Store({
         },
         DeleteAllData(pContext) {
             pContext.commit('DeleteAllData');
+        },
+        RemoveCartProductUser(pContext, pPayload) {
+            pContext.commit('RemoveCartProductUser', pPayload);
         }
     }
 });

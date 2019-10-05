@@ -18,7 +18,8 @@ window.VueInstance = new Vue({
 		SaveTheDataToLocalForage() {
 			let tInitialData = {
 				Products: ProductsData,
-				Users: UsersData
+				Users: UsersData,
+				LoginDetails: {}
 			};
 			return localforage.getItem('AppData').then(function(pAppData) {
 				if (!pAppData) {
@@ -48,8 +49,7 @@ window.VueInstance = new Vue({
 		const that = this;
 		this.SaveTheDataToLocalForage().then(function(pAppData) {
 			that.PutInitialDataToCentralState(pAppData);
-			if ((that.$store.getters.GetUserLoginDetails) 
-			&& (that.$store.getters.GetUserLoginDetails.UserId)) {
+			if (that.$store.getters.GetUserLoginDetails.UserId) {
 				that.$store.dispatch('SetPageDisplay', 'Products');
 			}
 		});
