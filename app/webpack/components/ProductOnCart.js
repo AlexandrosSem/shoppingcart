@@ -70,13 +70,14 @@ export default {
                 return pProductId === pEl.Id;
             });
             if (tTargetIndex > -1) {
-                tCurrentProduct.StockQuantity += tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
+                const tQuantity = tProductsInfoOnCart[tTargetIndex].QuantityOnCart;
+                tCurrentProduct.StockQuantity += tQuantity;
                 tProductsInfoOnCart[tTargetIndex].QuantityOnCart = 0;
                 tProductsInfoOnCart.splice(tTargetIndex, 1);
                 this.RemoveCartProductUser({
                     UserIndex: tCurrentUserIndex,
                     Id: pProductId,
-                    Quantity: tProductsInfoOnCart[tTargetIndex].QuantityOnCart
+                    Quantity: tQuantity
                 });
             } else {
                 alert(`Product with ID = '${pProductId}' not found!`);

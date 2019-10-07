@@ -80,15 +80,15 @@ export default new Vuex.Store({
         },
         RemoveCartProductUser(pState, pPayload) {
             const tProductsOnCart = pState.Users[pPayload.UserIndex].ProductsOnCart;
-                const tIndex = tProductsOnCart.findIndex(function(pEl) {
-                    return pEl.Id === pPayload.Id;
-                });
-                if (tIndex > -1) {
-                    tProductsOnCart[tIndex].Quantity -= pPayload.Quantity;
-                    if (tProductsOnCart[tIndex].Quantity === 0) {
-                        tProductsOnCart.splice(tIndex, 1);
-                    }
+            const tIndex = tProductsOnCart.findIndex(function(pEl) {
+                return pEl.Id === pPayload.Id;
+            });
+            if (tIndex > -1) {
+                tProductsOnCart[tIndex].Quantity -= pPayload.Quantity;
+                if (tProductsOnCart[tIndex].Quantity === 0) {
+                    tProductsOnCart.splice(tIndex, 1);
                 }
+            }
         },
         ResetPageDisplay(pState) {
             pState.PageDisplay = 'Login';

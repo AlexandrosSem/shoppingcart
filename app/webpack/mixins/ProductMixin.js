@@ -54,7 +54,7 @@ export default {
                     }
                 }
                 return localforage.setItem('AppData', pAppData);
-              });
+            });
         }
     }
 };

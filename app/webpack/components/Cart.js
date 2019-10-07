@@ -1,5 +1,8 @@
+import UserMixin from '../mixins/UserMixin';
+import ProductMixin from '../mixins/ProductMixin';
 import ProductOnCart from './ProductOnCart';
 export default {
+    mixins: [UserMixin, ProductMixin], // Mixins
     template: `<div>
         <div v-if="ProductsInfoOnCart.length > 0">
             <div>
@@ -30,15 +33,26 @@ export default {
     },
     methods: {
         EmptyTheCart() {
-            let tProducts = this.Products;
-            let tProductsInfoOnCart = this.ProductsInfoOnCart;
-            const tProductsIndex = this.ProductsIndex;
-            tProductsInfoOnCart.forEach(function(pEl, pIndex) {
-                const tCurrentId = pEl.Id;
-                let tCurrentProduct = tProducts[tProductsIndex[tCurrentId]];
-                tCurrentProduct.StockQuantity += tProductsInfoOnCart[pIndex].QuantityOnCart;
-            });
-            tProductsInfoOnCart.splice(0, tProductsInfoOnCart.length);
+            const that = this;
+            (async function() {
+                let tProducts = that.Products;
+                let tProductsInfoOnCart = that.ProductsInfoOnCart;
+                const tProductsIndex = that.ProductsIndex;
+                const tCurrentUserId = that.$store.getters.GetUserLoginDetails.UserId;
+                const tCurrentUserIndex = that.GetCurrentUserIndex(tCurrentUserId);
+                for (let i = 0, l = tProductsInfoOnCart.length; i < l; i++) {
+                    const tCurrentId = tProductsInfoOnCart[i].Id;
+                    const tQuantity = tProductsInfoOnCart[i].QuantityOnCart;
+                    let tCurrentProduct = tProducts[tProductsIndex[tCurrentId]];
+                    tCurrentProduct.StockQuantity += tQuantity;
+                    await that.RemoveCartProductUser({
+                        UserIndex: tCurrentUserIndex,
+                        Id: tCurrentId,
+                        Quantity: tQuantity
+                    });
+                }
+                tProductsInfoOnCart.splice(0, tProductsInfoOnCart.length);
+            }());
         }
     },
     components: {
