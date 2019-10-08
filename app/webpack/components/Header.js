@@ -23,7 +23,7 @@ export default {
         </a>
         <a v-if="!CheckLoginDetails" class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Login') }" href="#" v-on:click="SetPage('Login')">Login</a>
         <a v-if="!CheckLoginDetails" class="navbar-item" v-bind:class="{ 'is-active':(PageNow === 'Signup') }" href="#" v-on:click="SetPage('Signup')">Signup</a>
-        <a v-if="CheckLoginDetails" class="navbar-item" href="#" v-on:click="LogOut('Login')">Logout</a>
+        <a v-if="CheckLoginDetails" class="navbar-item" href="#" v-on:click="LogOut()">Logout</a>
         <a class="navbar-item" href="#" v-on:click="DeleteDatabase()">Delete Database</a>
     </nav>`,
     computed: {
@@ -49,10 +49,9 @@ export default {
         SetPage(pPage) {
             this.$store.dispatch('SetPageDisplay', pPage);
         },
-        LogOut(pPage) {
-            const that = this;
+        LogOut() {
             this.DeleteLoginDetails().then(function() {
-                that.SetPage(pPage);
+                window.location.reload();
             });
         },
         DeleteDatabase() {

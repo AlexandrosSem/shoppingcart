@@ -102,5 +102,16 @@ export default {
             tCurrentProduct.StockQuantity = 0;
             this.AddCartProductUser(tCurrentUserIndex, tProductOnCartIndex, tObjProductOnCartUser);
         }
+    },
+    created() {
+        const that = this;
+        if (this.ProductsInfoOnCart.length === 0) {
+            const tCurrentUserId = this.$store.getters.GetUserLoginDetails.UserId;
+            const tCurrentUserIndex = this.GetCurrentUserIndex(tCurrentUserId);
+            const tProductOnCartUser = this.$store.getters.GetUsers[tCurrentUserIndex].ProductsOnCart;
+            tProductOnCartUser.forEach(function(pEl) {
+                that.AddToCart(pEl.Id, pEl.Quantity);
+            });
+        }
     }
 };

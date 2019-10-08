@@ -8,7 +8,9 @@
 	<body>
 		<div id="rootContainer" class="container">
 			<div is="Header"></div>
-			<div v-bind:is="$store.getters.GetPageDisplay"></div>
+			<keep-alive>
+				<div v-bind:is="$store.getters.GetPageDisplay"></div>
+			</keep-alive>
 		</div>
 		<script src="./lib/localforage/localforage.min.js"></script>
 		<script src="./lib/vue/vue.js"></script>

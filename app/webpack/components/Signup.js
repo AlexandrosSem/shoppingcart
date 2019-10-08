@@ -75,6 +75,7 @@ export default {
     },
     methods: {
         SignupUser() {
+            const that = this;
             if (this.IsFormFilledWithData()) {
                 if (!this.CheckIfUserAlreadyExists(this.Email)) {
                     const tUserData = {
@@ -89,8 +90,12 @@ export default {
                         ProductsOnCart: this.ProductsOnCart,
                         MyProducts: this.MyProducts
                     };
-                    this.AddUser(tUserData);
-                    this.ClearForm();
+                    this.AddUser(tUserData).then(function() {
+                        that.ClearForm();
+                        that.SaveLoginDetails(tUserData.Id).then(function() {
+                            window.location.reload();
+                        });
+                    });
                 } else {
                     alert('This email is already being used by another user.');
                 }
