@@ -1,2 +1,9 @@
 # Shopping Cart
-Shopping Cart using vuejs and IndexedDB.
+Shopping Cart using VueJS and IndexedDB.
+
+# Built With
+VueJS
+IndexedDB
+LocalForage
+Bulma (CSS framework)
+Gulp
